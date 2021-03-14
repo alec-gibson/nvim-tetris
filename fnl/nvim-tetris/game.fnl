@@ -3,7 +3,6 @@
             util nvim-tetris.util
             v aniseed.view
             tetris_io nvim-tetris.io
-            fennel fennel
             a aniseed.core}})
 
 ; ------------ ALIASES -------------

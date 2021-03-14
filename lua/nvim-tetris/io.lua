@@ -118,10 +118,8 @@ do
   do
     local v_0_0 = nil
     local function remove_row0(row)
-      print("Removing row ", row)
       local buf_row = a.inc((const.screen_rows - row))
       local top_row = 1
-      print("Deleting buffer line ", buf_row)
       api.nvim_buf_set_lines(buf, buf_row, a.inc(buf_row), false, {})
       api.nvim_buf_set_lines(buf, top_row, top_row, false, {string.rep("\226\150\136\226\150\136", const.screen_cols)})
       return api.nvim_buf_add_highlight(buf, -1, "TetrisBackground", top_row, 0, -1)

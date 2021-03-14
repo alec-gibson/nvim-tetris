@@ -19,11 +19,11 @@ end
 local function _1_(...)
   local ok_3f_0_, val_0_ = nil, nil
   local function _1_()
-    return {require("aniseed.core"), require("nvim-tetris.const"), require("fennel"), require("nvim-tetris.io"), require("nvim-tetris.util"), require("aniseed.view")}
+    return {require("aniseed.core"), require("nvim-tetris.const"), require("nvim-tetris.io"), require("nvim-tetris.util"), require("aniseed.view")}
   end
   ok_3f_0_, val_0_ = pcall(_1_)
   if ok_3f_0_ then
-    _0_0["aniseed/local-fns"] = {require = {a = "aniseed.core", const = "nvim-tetris.const", fennel = "fennel", tetris_io = "nvim-tetris.io", util = "nvim-tetris.util", v = "aniseed.view"}}
+    _0_0["aniseed/local-fns"] = {require = {a = "aniseed.core", const = "nvim-tetris.const", tetris_io = "nvim-tetris.io", util = "nvim-tetris.util", v = "aniseed.view"}}
     return val_0_
   else
     return print(val_0_)
@@ -32,10 +32,9 @@ end
 local _local_0_ = _1_(...)
 local a = _local_0_[1]
 local const = _local_0_[2]
-local fennel = _local_0_[3]
-local tetris_io = _local_0_[4]
-local util = _local_0_[5]
-local v = _local_0_[6]
+local tetris_io = _local_0_[3]
+local util = _local_0_[4]
+local v = _local_0_[5]
 local _2amodule_2a = _0_0
 local _2amodule_name_2a = "nvim-tetris.game"
 do local _ = ({nil, _0_0, {{}, nil, nil, nil}})[2] end

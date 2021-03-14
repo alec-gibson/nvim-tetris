@@ -51,4 +51,4 @@ do
   t_0_["init"] = v_0_
   init = v_0_
 end
-return init()
+return nil
