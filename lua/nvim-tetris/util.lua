@@ -274,7 +274,7 @@ do
   do
     local v_0_0 = nil
     local function get_random_piece0()
-      return const.piece_types[1]
+      return const.piece_types[math.ceil(a.rand(a.count(const.piece_types)))]
     end
     v_0_0 = get_random_piece0
     _0_0["get_random_piece"] = v_0_0
