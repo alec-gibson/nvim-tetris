@@ -66,11 +66,13 @@ local shadow_offset = 0
 local piece_rotation = 0
 local game_state = states.intro
 local timer = nil
-local level = 0
-local lines_cleared = 0
 local remaining_appearing_frames = 0
 local falling_delay_frames = 0
 local locking_delay_frames = 0
+local level = 0
+local lines_cleared = 0
+local next_piece = 1
+local saved_piece = 1
 local remove_row = nil
 do
   local v_0_ = nil
