@@ -42,6 +42,10 @@
   (or (out_of_game_bounds? row col)
     (. (. occupied_squares row) col)))
 
+(defn- square_collides_or_below_screen? [row col occupied_squares]
+  (or (< row 1)
+    (. (. occupied_squares row) col)))
+
 ; [x y] {:square_offsets [[x y]] :colour ""} int -> [{:coords [x y] :colour ""}]
 (defn get_piece_squares [pivot piece rotation]
   (icollect [_ offset (ipairs (apply_rotation piece rotation))]
@@ -59,7 +63,7 @@
   (each [_ square (ipairs piece_squares)]
     (let [{:coords [col row]} square]
       (for [shadow_row row 0 -1]
-        (if (square_collides_or_out_of_bounds? shadow_row col occupied_squares)
+        (if (square_collides_or_below_screen? shadow_row col occupied_squares)
           (let [diff (a.dec (- row shadow_row))]
             (if (< diff vert_dist)
               (set vert_dist diff))

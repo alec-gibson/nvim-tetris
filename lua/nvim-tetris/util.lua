@@ -149,6 +149,17 @@ do
   t_0_["square_collides_or_out_of_bounds?"] = v_0_
   square_collides_or_out_of_bounds_3f = v_0_
 end
+local square_collides_or_below_screen_3f = nil
+do
+  local v_0_ = nil
+  local function square_collides_or_below_screen_3f0(row, col, occupied_squares)
+    return ((row < 1) or occupied_squares[row][col])
+  end
+  v_0_ = square_collides_or_below_screen_3f0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["square_collides_or_below_screen?"] = v_0_
+  square_collides_or_below_screen_3f = v_0_
+end
 local get_piece_squares = nil
 do
   local v_0_ = nil
@@ -202,7 +213,7 @@ do
         local col = _let_1_[1]
         local row = _let_1_[2]
         for shadow_row = row, 0, -1 do
-          if square_collides_or_out_of_bounds_3f(shadow_row, col, occupied_squares) then
+          if square_collides_or_below_screen_3f(shadow_row, col, occupied_squares) then
             local diff = a.dec((row - shadow_row))
             if (diff < vert_dist) then
               vert_dist = diff
