@@ -97,6 +97,10 @@ do
     for _, row in ipairs(rows) do
       if util["row_full?"](row, occupied_squares) then
         remove_row(row)
+        lines_cleared = a.inc(lines_cleared)
+        if (0 == (lines_cleared % 10)) then
+          level = a.inc(level)
+        end
       end
     end
     return nil

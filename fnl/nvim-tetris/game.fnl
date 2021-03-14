@@ -43,8 +43,11 @@
 (defn- check_for_cleared_rows [piece_squares]
   (let [rows (util.get_square_rows piece_squares)]
     (each [_ row (ipairs rows)]
-      (if (util.row_full? row occupied_squares)
-        (remove_row row)))))
+      (when (util.row_full? row occupied_squares)
+        (remove_row row)
+        (set lines_cleared (a.inc lines_cleared))
+        (when (= 0 (% lines_cleared 10))
+          (set level (a.inc level)))))))
 
 (defn- lock_piece []
   (let [piece_squares (util.get_piece_squares piece_pivot piece piece_rotation)]
