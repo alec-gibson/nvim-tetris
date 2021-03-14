@@ -103,3 +103,25 @@
               (let [{:coords [col row]} square]
                 (not ( out_of_screen_bounds? row col))))
             squares))
+
+(defn- get_trial_offsets [old_offsets new_offsets]
+  (let [trial_offsets []]
+    (for [i 1 (a.count old_offsets)]
+      (let [[old_col old_row] (. old_offsets i)
+            [new_col new_row] (. new_offsets i)]
+        (table.insert trial_offsets [(- old_col new_col) (- old_row new_row)])))
+    trial_offsets))
+
+(defn get_rotation_offset [pivot piece old_rotation new_rotation occupied_squares]
+  (var rotation_offset nil)
+  (let [old_offsets (. piece.wallkick_offsets (% old_rotation 4))
+        new_offsets (. piece.wallkick_offsets (% new_rotation 4))
+        trial_offsets (get_trial_offsets old_offsets new_offsets)]
+    (each [_ offset (ipairs trial_offsets)]
+      (let [[d_x d_y] offset
+            [x y] pivot
+            new_pivot [(+ x d_x) (+ y d_y)]]
+        (when (not (piece_collides_or_out_of_bounds? (get_piece_squares new_pivot piece new_rotation) occupied_squares))
+          (set rotation_offset offset)
+          (lua "break"))))
+    rotation_offset))

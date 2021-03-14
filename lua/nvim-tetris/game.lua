@@ -218,7 +218,16 @@ do
   do
     local v_0_0 = nil
     local function rotate_left0()
-      if not util["piece_collides_or_out_of_bounds?"](util.get_piece_squares(piece_pivot, piece, a.dec(piece_rotation)), occupied_squares) then
+      local rotation_offset = util.get_rotation_offset(piece_pivot, piece, piece_rotation, a.dec(piece_rotation), occupied_squares)
+      if not a["nil?"](rotation_offset) then
+        local _let_0_ = rotation_offset
+        local d_x = _let_0_[1]
+        local d_y = _let_0_[2]
+        local _let_1_ = piece_pivot
+        local x = _let_1_[1]
+        local y = _let_1_[2]
+        local new_pivot = {(x + d_x), (y + d_y)}
+        piece_pivot = new_pivot
         piece_rotation = a.dec(piece_rotation)
         return nil
       end
@@ -237,7 +246,16 @@ do
   do
     local v_0_0 = nil
     local function rotate_right0()
-      if not util["piece_collides_or_out_of_bounds?"](util.get_piece_squares(piece_pivot, piece, a.inc(piece_rotation)), occupied_squares) then
+      local rotation_offset = util.get_rotation_offset(piece_pivot, piece, piece_rotation, a.inc(piece_rotation), occupied_squares)
+      if not a["nil?"](rotation_offset) then
+        local _let_0_ = rotation_offset
+        local d_x = _let_0_[1]
+        local d_y = _let_0_[2]
+        local _let_1_ = piece_pivot
+        local x = _let_1_[1]
+        local y = _let_1_[2]
+        local new_pivot = {(x + d_x), (y + d_y)}
+        piece_pivot = new_pivot
         piece_rotation = a.inc(piece_rotation)
         return nil
       end

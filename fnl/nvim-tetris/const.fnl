@@ -33,18 +33,18 @@
 ; - if that puts you inside another piece, try shifting by wallkick_offsets.I.0[2] - wallkick_offsets.I.1[2]
 ; - keep trying until you find one that doesn't put you inside another piece
 ; - if no wallkick works, the rotation fails
-(def wallkick_offsets {:normal {:0 [[0 0] [0 0] [0 0] [0 0] [0 0]]
-                                :1 [[0 0] [1 0] [1 -1] [0 2] [1 2]]
-                                :2 [[0 0] [0 0] [0 0] [0 0] [0 0]]
-                                :3 [[0 0] [-1 0] [-1 -1] [0 2] [-1 2]]}
-                       :I {:0 [[0 0] [-1 0] [2 0] [-1 0] [2 0]]
-                           :1 [[-1 0] [0 0] [0 0] [0 1] [0 -2]]
-                           :2 [[-1 1] [1 1] [-2 1] [1 0] [-2 0]]
-                           :3 [[0 1] [0 1] [0 1] [0 -1] [0 2]]}
-                       :O {:0 [[0 0]]
-                           :1 [[0 -1]]
-                           :2 [[-1 -1]]
-                           :3 [[-1 0]]}})
+(def wallkick_offsets {:normal {0 [[0 0] [0 0] [0 0] [0 0] [0 0]]
+                                1 [[0 0] [1 0] [1 -1] [0 2] [1 2]]
+                                2 [[0 0] [0 0] [0 0] [0 0] [0 0]]
+                                3 [[0 0] [-1 0] [-1 -1] [0 2] [-1 2]]}
+                       :I {0 [[0 0] [-1 0] [2 0] [-1 0] [2 0]]
+                           1 [[-1 0] [0 0] [0 0] [0 1] [0 -2]]
+                           2 [[-1 1] [1 1] [-2 1] [1 0] [-2 0]]
+                           3 [[0 1] [0 1] [0 1] [0 -1] [0 2]]}
+                       :O {0 [[0 0]]
+                           1 [[0 -1]]
+                           2 [[-1 -1]]
+                           3 [[-1 0]]}})
 
 ; list of pieces in their initial positions / orientations
 ; following "How Guideline SRS Really Works" from https://harddrop.com/wiki/SRS

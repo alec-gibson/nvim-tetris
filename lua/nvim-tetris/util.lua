@@ -360,4 +360,58 @@ do
   t_0_["squares_in_bounds"] = v_0_
   squares_in_bounds = v_0_
 end
+local get_trial_offsets = nil
+do
+  local v_0_ = nil
+  local function get_trial_offsets0(old_offsets, new_offsets)
+    local trial_offsets = {}
+    for i = 1, a.count(old_offsets) do
+      local _let_0_ = old_offsets[i]
+      local old_col = _let_0_[1]
+      local old_row = _let_0_[2]
+      local _let_1_ = new_offsets[i]
+      local new_col = _let_1_[1]
+      local new_row = _let_1_[2]
+      table.insert(trial_offsets, {(old_col - new_col), (old_row - new_row)})
+    end
+    return trial_offsets
+  end
+  v_0_ = get_trial_offsets0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["get_trial_offsets"] = v_0_
+  get_trial_offsets = v_0_
+end
+local get_rotation_offset = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = nil
+    local function get_rotation_offset0(pivot, piece, old_rotation, new_rotation, occupied_squares)
+      local rotation_offset = nil
+      local old_offsets = piece.wallkick_offsets[(old_rotation % 4)]
+      local new_offsets = piece.wallkick_offsets[(new_rotation % 4)]
+      local trial_offsets = get_trial_offsets(old_offsets, new_offsets)
+      for _, offset in ipairs(trial_offsets) do
+        local _let_0_ = offset
+        local d_x = _let_0_[1]
+        local d_y = _let_0_[2]
+        local _let_1_ = pivot
+        local x = _let_1_[1]
+        local y = _let_1_[2]
+        local new_pivot = {(x + d_x), (y + d_y)}
+        if not piece_collides_or_out_of_bounds_3f(get_piece_squares(new_pivot, piece, new_rotation), occupied_squares) then
+          rotation_offset = offset
+          break
+        end
+      end
+      return rotation_offset
+    end
+    v_0_0 = get_rotation_offset0
+    _0_0["get_rotation_offset"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["get_rotation_offset"] = v_0_
+  get_rotation_offset = v_0_
+end
 return nil

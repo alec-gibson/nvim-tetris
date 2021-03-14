@@ -84,15 +84,23 @@
     (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
       (set piece_pivot new_pivot))))
 
-; TODO: wallkick
 (defn rotate_left []
-  (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares piece_pivot piece (a.dec piece_rotation)) occupied_squares))
-    (set piece_rotation (a.dec piece_rotation))))
+  (let [rotation_offset (util.get_rotation_offset piece_pivot piece piece_rotation (a.dec piece_rotation) occupied_squares)]
+    (when (not (a.nil? rotation_offset))
+      (let [[d_x d_y] rotation_offset
+            [x y] piece_pivot
+            new_pivot [(+ x d_x) (+ y d_y)]]
+        (set piece_pivot new_pivot)
+        (set piece_rotation (a.dec piece_rotation))))))
 
-; TODO: wallkick
 (defn rotate_right []
-  (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares piece_pivot piece (a.inc piece_rotation)) occupied_squares))
-    (set piece_rotation (a.inc piece_rotation))))
+  (let [rotation_offset (util.get_rotation_offset piece_pivot piece piece_rotation (a.inc piece_rotation) occupied_squares)]
+    (when (not (a.nil? rotation_offset))
+      (let [[d_x d_y] rotation_offset
+            [x y] piece_pivot
+            new_pivot [(+ x d_x) (+ y d_y)]]
+        (set piece_pivot new_pivot)
+        (set piece_rotation (a.inc piece_rotation))))))
 
 (defn soft_drop []
   (let [[col row] piece_pivot
