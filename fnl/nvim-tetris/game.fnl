@@ -1,9 +1,9 @@
 (module nvim-tetris.game
   {require {const nvim-tetris.const
             util nvim-tetris.util
-            v aniseed.view
+            v nvim-tetris.aniseed.view
             tetris_io nvim-tetris.io
-            a aniseed.core}})
+            a nvim-tetris.aniseed.core}})
 
 ; ------------ ALIASES -------------
 

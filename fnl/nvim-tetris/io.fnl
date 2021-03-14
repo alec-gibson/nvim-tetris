@@ -1,6 +1,6 @@
 (module nvim-tetris.io
-  {require {a aniseed.core
-            v aniseed.view
+  {require {a nvim-tetris.aniseed.core
+            v nvim-tetris.aniseed.view
             const nvim-tetris.const
             util nvim-tetris.util}})
 

@@ -19,11 +19,11 @@ end
 local function _1_(...)
   local ok_3f_0_, val_0_ = nil, nil
   local function _1_()
-    return {require("aniseed.core"), require("nvim-tetris.const"), require("aniseed.view")}
+    return {require("nvim-tetris.aniseed.core"), require("nvim-tetris.const"), require("nvim-tetris.aniseed.view")}
   end
   ok_3f_0_, val_0_ = pcall(_1_)
   if ok_3f_0_ then
-    _0_0["aniseed/local-fns"] = {require = {a = "aniseed.core", const = "nvim-tetris.const", v = "aniseed.view"}}
+    _0_0["aniseed/local-fns"] = {require = {a = "nvim-tetris.aniseed.core", const = "nvim-tetris.const", v = "nvim-tetris.aniseed.view"}}
     return val_0_
   else
     return print(val_0_)

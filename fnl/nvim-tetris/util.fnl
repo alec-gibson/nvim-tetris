@@ -1,7 +1,7 @@
 (module nvim-tetris.util
   {require {const nvim-tetris.const
-            a aniseed.core
-            v aniseed.view}})
+            a nvim-tetris.aniseed.core
+            v nvim-tetris.aniseed.view}})
 
 (defn- unique [tbl]
   (let [vals {}]
