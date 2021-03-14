@@ -269,42 +269,12 @@ do
   t_0_["move_right"] = v_0_
   move_right = v_0_
 end
-local rotate_left = nil
+local rotate = nil
 do
   local v_0_ = nil
   do
     local v_0_0 = nil
-    local function rotate_left0()
-      local rotation_offset = util.get_rotation_offset(piece_pivot, piece, piece_rotation, a.dec(piece_rotation), occupied_squares)
-      if not a["nil?"](rotation_offset) then
-        local _let_0_ = rotation_offset
-        local d_x = _let_0_[1]
-        local d_y = _let_0_[2]
-        local _let_1_ = piece_pivot
-        local x = _let_1_[1]
-        local y = _let_1_[2]
-        local new_pivot = {(x + d_x), (y + d_y)}
-        piece_pivot = new_pivot
-        piece_rotation = a.dec(piece_rotation)
-        if (game_state == states.locking) then
-          return init_falling()
-        end
-      end
-    end
-    v_0_0 = rotate_left0
-    _0_0["rotate_left"] = v_0_0
-    v_0_ = v_0_0
-  end
-  local t_0_ = (_0_0)["aniseed/locals"]
-  t_0_["rotate_left"] = v_0_
-  rotate_left = v_0_
-end
-local rotate_right = nil
-do
-  local v_0_ = nil
-  do
-    local v_0_0 = nil
-    local function rotate_right0()
+    local function rotate0()
       local rotation_offset = util.get_rotation_offset(piece_pivot, piece, piece_rotation, a.inc(piece_rotation), occupied_squares)
       if not a["nil?"](rotation_offset) then
         local _let_0_ = rotation_offset
@@ -321,13 +291,13 @@ do
         end
       end
     end
-    v_0_0 = rotate_right0
-    _0_0["rotate_right"] = v_0_0
+    v_0_0 = rotate0
+    _0_0["rotate"] = v_0_0
     v_0_ = v_0_0
   end
   local t_0_ = (_0_0)["aniseed/locals"]
-  t_0_["rotate_right"] = v_0_
-  rotate_right = v_0_
+  t_0_["rotate"] = v_0_
+  rotate = v_0_
 end
 local soft_drop = nil
 do
