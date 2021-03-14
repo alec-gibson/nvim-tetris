@@ -166,6 +166,63 @@ do
   t_0_["close_timer"] = v_0_
   close_timer = v_0_
 end
+local do_game_over = nil
+do
+  local v_0_ = nil
+  local function do_game_over0()
+    print("GAME OVER")
+    return close_timer()
+  end
+  v_0_ = do_game_over0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["do_game_over"] = v_0_
+  do_game_over = v_0_
+end
+local init_appearing = nil
+do
+  local v_0_ = nil
+  local function init_appearing0()
+    remaining_appearing_frames = const.entry_delay
+    piece = util.get_random_piece()
+    piece_pivot = {5, 20}
+    piece_rotation = 0
+    if util["piece_collides_or_out_of_bounds?"](util.get_piece_squares(piece_pivot, piece, piece_rotation), occupied_squares) then
+      do_game_over()
+    end
+    game_state = states.appearing
+    return nil
+  end
+  v_0_ = init_appearing0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["init_appearing"] = v_0_
+  init_appearing = v_0_
+end
+local init_falling = nil
+do
+  local v_0_ = nil
+  local function init_falling0()
+    reset_falling_delay()
+    game_state = states.falling
+    return nil
+  end
+  v_0_ = init_falling0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["init_falling"] = v_0_
+  init_falling = v_0_
+end
+local init_locking = nil
+do
+  local v_0_ = nil
+  local function init_locking0()
+    locking_delay_frames = const.lock_delay
+    game_state = states.locking
+    return nil
+  end
+  v_0_ = init_locking0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["init_locking"] = v_0_
+  init_locking = v_0_
+end
 local move_left = nil
 do
   local v_0_ = nil
@@ -229,7 +286,9 @@ do
         local new_pivot = {(x + d_x), (y + d_y)}
         piece_pivot = new_pivot
         piece_rotation = a.dec(piece_rotation)
-        return nil
+        if (game_state == states.locking) then
+          return init_falling()
+        end
       end
     end
     v_0_0 = rotate_left0
@@ -257,7 +316,9 @@ do
         local new_pivot = {(x + d_x), (y + d_y)}
         piece_pivot = new_pivot
         piece_rotation = a.inc(piece_rotation)
-        return nil
+        if (game_state == states.locking) then
+          return init_falling()
+        end
       end
     end
     v_0_0 = rotate_right0
@@ -313,63 +374,6 @@ do
   local t_0_ = (_0_0)["aniseed/locals"]
   t_0_["hard_drop"] = v_0_
   hard_drop = v_0_
-end
-local do_game_over = nil
-do
-  local v_0_ = nil
-  local function do_game_over0()
-    print("GAME OVER")
-    return close_timer()
-  end
-  v_0_ = do_game_over0
-  local t_0_ = (_0_0)["aniseed/locals"]
-  t_0_["do_game_over"] = v_0_
-  do_game_over = v_0_
-end
-local init_appearing = nil
-do
-  local v_0_ = nil
-  local function init_appearing0()
-    remaining_appearing_frames = const.entry_delay
-    piece = util.get_random_piece()
-    piece_pivot = {5, 20}
-    piece_rotation = 0
-    if util["piece_collides_or_out_of_bounds?"](util.get_piece_squares(piece_pivot, piece, piece_rotation), occupied_squares) then
-      do_game_over()
-    end
-    game_state = states.appearing
-    return nil
-  end
-  v_0_ = init_appearing0
-  local t_0_ = (_0_0)["aniseed/locals"]
-  t_0_["init_appearing"] = v_0_
-  init_appearing = v_0_
-end
-local init_falling = nil
-do
-  local v_0_ = nil
-  local function init_falling0()
-    reset_falling_delay()
-    game_state = states.falling
-    return nil
-  end
-  v_0_ = init_falling0
-  local t_0_ = (_0_0)["aniseed/locals"]
-  t_0_["init_falling"] = v_0_
-  init_falling = v_0_
-end
-local init_locking = nil
-do
-  local v_0_ = nil
-  local function init_locking0()
-    locking_delay_frames = const.lock_delay
-    game_state = states.locking
-    return nil
-  end
-  v_0_ = init_locking0
-  local t_0_ = (_0_0)["aniseed/locals"]
-  t_0_["init_locking"] = v_0_
-  init_locking = v_0_
 end
 local do_appearing_frame = nil
 do

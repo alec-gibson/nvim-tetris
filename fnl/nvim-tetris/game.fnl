@@ -70,50 +70,6 @@
 (defn- close_timer []
   (timer:close))
 
-; ----------- MOVEMENT -------------
-
-(defn move_left []
-  (let [[col row] piece_pivot
-        new_pivot [(a.dec col) row]]
-    (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
-      (set piece_pivot new_pivot))))
-
-(defn move_right []
-  (let [[col row] piece_pivot
-        new_pivot [(a.inc col) row]]
-    (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
-      (set piece_pivot new_pivot))))
-
-(defn rotate_left []
-  (let [rotation_offset (util.get_rotation_offset piece_pivot piece piece_rotation (a.dec piece_rotation) occupied_squares)]
-    (when (not (a.nil? rotation_offset))
-      (let [[d_x d_y] rotation_offset
-            [x y] piece_pivot
-            new_pivot [(+ x d_x) (+ y d_y)]]
-        (set piece_pivot new_pivot)
-        (set piece_rotation (a.dec piece_rotation))))))
-
-(defn rotate_right []
-  (let [rotation_offset (util.get_rotation_offset piece_pivot piece piece_rotation (a.inc piece_rotation) occupied_squares)]
-    (when (not (a.nil? rotation_offset))
-      (let [[d_x d_y] rotation_offset
-            [x y] piece_pivot
-            new_pivot [(+ x d_x) (+ y d_y)]]
-        (set piece_pivot new_pivot)
-        (set piece_rotation (a.inc piece_rotation))))))
-
-(defn soft_drop []
-  (let [[col row] piece_pivot
-        new_pivot [col (a.dec row)]]
-    (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
-      (set piece_pivot new_pivot))))
-
-(defn hard_drop []
-  (let [[col row] piece_pivot
-        new_pivot [col (- row shadow_offset)]]
-    (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
-      (set piece_pivot new_pivot))))
-
 ; ---------- INIT STATES -----------
 
 (defn- do_game_over []
@@ -139,6 +95,54 @@
 (defn- init_locking []
   (set locking_delay_frames const.lock_delay)
   (set game_state states.locking))
+
+; ----------- MOVEMENT -------------
+
+(defn move_left []
+  (let [[col row] piece_pivot
+        new_pivot [(a.dec col) row]]
+    (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
+      (set piece_pivot new_pivot))))
+
+(defn move_right []
+  (let [[col row] piece_pivot
+        new_pivot [(a.inc col) row]]
+    (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
+      (set piece_pivot new_pivot))))
+
+(defn rotate_left []
+  (let [rotation_offset (util.get_rotation_offset piece_pivot piece piece_rotation (a.dec piece_rotation) occupied_squares)]
+    (when (not (a.nil? rotation_offset))
+      (let [[d_x d_y] rotation_offset
+            [x y] piece_pivot
+            new_pivot [(+ x d_x) (+ y d_y)]]
+        (set piece_pivot new_pivot)
+        (set piece_rotation (a.dec piece_rotation))
+        (when (= game_state states.locking)
+          (init_falling))))))
+
+(defn rotate_right []
+  (let [rotation_offset (util.get_rotation_offset piece_pivot piece piece_rotation (a.inc piece_rotation) occupied_squares)]
+    (when (not (a.nil? rotation_offset))
+      (let [[d_x d_y] rotation_offset
+            [x y] piece_pivot
+            new_pivot [(+ x d_x) (+ y d_y)]]
+        (set piece_pivot new_pivot)
+        (set piece_rotation (a.inc piece_rotation))
+        (when (= game_state states.locking)
+          (init_falling))))))
+
+(defn soft_drop []
+  (let [[col row] piece_pivot
+        new_pivot [col (a.dec row)]]
+    (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
+      (set piece_pivot new_pivot))))
+
+(defn hard_drop []
+  (let [[col row] piece_pivot
+        new_pivot [col (- row shadow_offset)]]
+    (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
+      (set piece_pivot new_pivot))))
 
 ; ---------- FRAME LOGIC -----------
 
@@ -197,6 +201,7 @@
 
 ; the logic to be executed on every game frame
 (defn- do_frame []
+  ; (print game_state)
   (match game_state
     states.appearing (do_appearing_frame)
     states.falling (do_falling_frame)
