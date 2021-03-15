@@ -198,7 +198,7 @@
 
 ; the logic to be executed on every game frame
 (defn- do_frame []
-  (print level)
+  (print "Level:" level)
   (match game_state
     states.appearing (do_appearing_frame)
     states.falling (do_falling_frame)

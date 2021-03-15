@@ -484,7 +484,7 @@ local do_frame = nil
 do
   local v_0_ = nil
   local function do_frame0()
-    print(level)
+    print("Level:", level)
     do
       local _2_0 = game_state
       if (_2_0 == states.appearing) then
