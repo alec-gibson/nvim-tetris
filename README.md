@@ -6,6 +6,7 @@ This plugin is written in [Fennel](https://fennel-lang.org/) using Olical's proj
 This plugin is IN PROGRESS, and is currently pretty far from being feature-complete.
 
 ## Next Steps
+- Add autocommand so if you close the tetris window it doesn't bork your entire nvim session
 - Add UI border showing current level, current score, next piece, saved piece (and add logic for saving pieces)
 - Add pause screen (with options to resume game, start new game or quit)
 - Add game over screen (with options to play again or quit)
