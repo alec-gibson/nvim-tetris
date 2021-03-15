@@ -77,7 +77,9 @@ do
   local v_0_ = nil
   local function remove_row0(row)
     for r = row, a.dec(const.rows) do
-      occupied_squares[r] = occupied_squares[a.inc(r)]
+      for c = 1, const.columns do
+        occupied_squares[r][c] = occupied_squares[a.inc(r)][c]
+      end
     end
     for c = 1, const.columns do
       occupied_squares[const.rows][c] = false
@@ -235,7 +237,9 @@ do
       local new_pivot = {a.dec(col), row}
       if not util["piece_collides_or_out_of_bounds?"](util.get_piece_squares(new_pivot, piece, piece_rotation), occupied_squares) then
         piece_pivot = new_pivot
-        return nil
+        if (game_state == states.locking) then
+          return init_falling()
+        end
       end
     end
     v_0_0 = move_left0
@@ -258,7 +262,9 @@ do
       local new_pivot = {a.inc(col), row}
       if not util["piece_collides_or_out_of_bounds?"](util.get_piece_squares(new_pivot, piece, piece_rotation), occupied_squares) then
         piece_pivot = new_pivot
-        return nil
+        if (game_state == states.locking) then
+          return init_falling()
+        end
       end
     end
     v_0_0 = move_right0

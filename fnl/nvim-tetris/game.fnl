@@ -35,7 +35,8 @@
 
 (defn- remove_row [row]
   (for [r row (a.dec const.rows)]
-    (tset occupied_squares r (. occupied_squares (a.inc r))))
+    (for [c 1 const.columns]
+      (tset (. occupied_squares r) c (. (. occupied_squares (a.inc r)) c))))
   (for [c 1 const.columns]
     (tset (. occupied_squares const.rows) c false))
   (tetris_io.remove_row row))
@@ -101,14 +102,18 @@
 (defn move_left []
   (let [[col row] piece_pivot
         new_pivot [(a.dec col) row]]
-    (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
-      (set piece_pivot new_pivot))))
+    (when (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
+      (set piece_pivot new_pivot)
+      (when (= game_state states.locking)
+          (init_falling)))))
 
 (defn move_right []
   (let [[col row] piece_pivot
         new_pivot [(a.inc col) row]]
-    (if (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
-      (set piece_pivot new_pivot))))
+    (when (not (util.piece_collides_or_out_of_bounds? (util.get_piece_squares new_pivot piece piece_rotation) occupied_squares))
+      (set piece_pivot new_pivot)
+      (when (= game_state states.locking)
+          (init_falling)))))
 
 (defn rotate []
   (let [rotation_offset (util.get_rotation_offset piece_pivot piece piece_rotation (a.inc piece_rotation) occupied_squares)]
@@ -190,7 +195,6 @@
 
 ; the logic to be executed on every game frame
 (defn- do_frame []
-  ; (print game_state)
   (match game_state
     states.appearing (do_appearing_frame)
     states.falling (do_falling_frame)
