@@ -168,12 +168,28 @@ do
   t_0_["close_timer"] = v_0_
   close_timer = v_0_
 end
+local stop_game = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = nil
+    local function stop_game0()
+      return close_timer()
+    end
+    v_0_0 = stop_game0
+    _0_0["stop_game"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["stop_game"] = v_0_
+  stop_game = v_0_
+end
 local do_game_over = nil
 do
   local v_0_ = nil
   local function do_game_over0()
     print("GAME OVER")
-    return close_timer()
+    return stop_game()
   end
   v_0_ = do_game_over0
   local t_0_ = (_0_0)["aniseed/locals"]
@@ -468,6 +484,7 @@ local do_frame = nil
 do
   local v_0_ = nil
   local function do_frame0()
+    print(level)
     do
       local _2_0 = game_state
       if (_2_0 == states.appearing) then
@@ -541,6 +558,7 @@ do
       init_occupied_squares()
       init_timer()
       tetris_io.set_game_maps()
+      tetris_io.prepare_game_cleanup()
       return start_timer()
     end
     v_0_0 = start0

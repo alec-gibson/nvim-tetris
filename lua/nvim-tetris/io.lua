@@ -309,7 +309,8 @@ do
     local function init_window0()
       buf = api.nvim_create_buf(false, true)
       api.nvim_buf_set_option(buf, "bufhidden", "wipe")
-      api.nvim_buf_set_option(buf, "filetype", "whid")
+      api.nvim_buf_set_option(buf, "filetype", "tetris")
+      api.nvim_buf_set_name(buf, "tetris")
       do
         local width = api.nvim_get_option("columns")
         local height = api.nvim_get_option("lines")
@@ -363,5 +364,21 @@ do
   local t_0_ = (_0_0)["aniseed/locals"]
   t_0_["set_game_maps"] = v_0_
   set_game_maps = v_0_
+end
+local prepare_game_cleanup = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = nil
+    local function prepare_game_cleanup0()
+      return api.nvim_command("autocmd BufWipeout tetris lua require(\"nvim-tetris.game\").stop_game()")
+    end
+    v_0_0 = prepare_game_cleanup0
+    _0_0["prepare_game_cleanup"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["prepare_game_cleanup"] = v_0_
+  prepare_game_cleanup = v_0_
 end
 return nil

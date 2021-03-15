@@ -105,23 +105,11 @@ do
   t_0_["frame_delay"] = v_0_
   frame_delay = v_0_
 end
-local soft_drop_speed = nil
-do
-  local v_0_ = nil
-  do
-    local v_0_0 = 1
-    _0_0["soft_drop_speed"] = v_0_0
-    v_0_ = v_0_0
-  end
-  local t_0_ = (_0_0)["aniseed/locals"]
-  t_0_["soft_drop_speed"] = v_0_
-  soft_drop_speed = v_0_
-end
 local lock_delay = nil
 do
   local v_0_ = nil
   do
-    local v_0_0 = 30
+    local v_0_0 = 10
     _0_0["lock_delay"] = v_0_0
     v_0_ = v_0_0
   end
@@ -133,7 +121,7 @@ local entry_delay = nil
 do
   local v_0_ = nil
   do
-    local v_0_0 = 30
+    local v_0_0 = 10
     _0_0["entry_delay"] = v_0_0
     v_0_ = v_0_0
   end
@@ -193,7 +181,7 @@ local gravity = nil
 do
   local v_0_ = nil
   do
-    local v_0_0 = {43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, [0] = 48}
+    local v_0_0 = {42, 37, 32, 27, 22, 17, 12, 7, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, [0] = 47}
     _0_0["gravity"] = v_0_0
     v_0_ = v_0_0
   end

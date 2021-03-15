@@ -187,7 +187,7 @@ do
     local v_0_0 = nil
     local function get_gravity0(level)
       if (level > const.max_level) then
-        return 1
+        return 0
       else
         return const.gravity[level]
       end

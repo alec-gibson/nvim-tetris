@@ -73,9 +73,12 @@
 
 ; ---------- INIT STATES -----------
 
+(defn stop_game []
+  (close_timer))
+
 (defn- do_game_over []
   (print "GAME OVER")
-  (close_timer))
+  (stop_game))
 
 (defn- init_appearing []
   (set remaining_appearing_frames const.entry_delay)
@@ -195,6 +198,7 @@
 
 ; the logic to be executed on every game frame
 (defn- do_frame []
+  (print level)
   (match game_state
     states.appearing (do_appearing_frame)
     states.falling (do_falling_frame)
@@ -230,6 +234,7 @@
   (init_occupied_squares)
   (init_timer)
   (tetris_io.set_game_maps)
+  (tetris_io.prepare_game_cleanup)
   (start_timer))
 
 ; (start)

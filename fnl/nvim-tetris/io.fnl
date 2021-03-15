@@ -82,7 +82,8 @@
 (defn init_window []
   (set buf (api.nvim_create_buf false true))
   (api.nvim_buf_set_option buf "bufhidden" "wipe")
-  (api.nvim_buf_set_option buf "filetype" "whid")
+  (api.nvim_buf_set_option buf "filetype" "tetris")
+  (api.nvim_buf_set_name buf "tetris")
   (let [width (api.nvim_get_option "columns")
       height (api.nvim_get_option "lines")
       col (math.ceil (/ (- width win_char_width) 2))
@@ -125,6 +126,9 @@
         (api.nvim_buf_set_keymap buf "n" v "" {:nowait true :noremap true :silent true})
         (api.nvim_buf_set_keymap buf "n" (string.upper v) "" {:nowait true :noremap true :silent true})
         (api.nvim_buf_set_keymap buf "n" (.. "<c-" v ">") "" {:nowait true :noremap true :silent true})))))
+
+(defn prepare_game_cleanup []
+  (api.nvim_command "autocmd BufWipeout tetris lua require(\"nvim-tetris.game\").stop_game()"))
 
 ; (defn- draw_some_squares []
 ;   (init_window)

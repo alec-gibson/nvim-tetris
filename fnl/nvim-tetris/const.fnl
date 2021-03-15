@@ -6,9 +6,8 @@
 (def screen_cols 10)
 (def max_level 28) ; after level 28, all levels are same speed
 (def frame_delay (math.floor (/ 1000 60)))
-(def soft_drop_speed 1) ; drop one gridcell per frame when holding down
-(def lock_delay 30) ; in frames. My game will support move reset - successfully moving or rotating resets the lock delay
-(def entry_delay 30) ; in frames. Time between previous piece locking and new piece starting to fall
+(def lock_delay 10) ; in frames. My game will support move reset - successfully moving or rotating resets the lock delay
+(def entry_delay 10) ; in frames. Time between previous piece locking and new piece starting to fall
 
 (def game_states {"appearing" 0
                   "falling" 1
@@ -82,32 +81,32 @@
 ; if level > 28, 1 frame is taken to drop one gridcell
 ; (values stolen from NES tetris)
 ; https://harddrop.com/wiki/Tetris_(NES,_Nintendo)
-(def gravity {0 48
-              1 43
-              2 38
-              3 33
-              4 28
-              5 23
-              6 18
-              7 13
-              8 8
-              9 6
-              10 5
-              11 5
-              12 5
-              13 4
-              14 4
-              15 4
-              16 3
-              17 3
-              18 3
-              19 2
-              20 2
-              21 2
-              22 2
-              23 2
-              24 2
-              25 2
-              26 2
-              27 2
-              28 2})
+(def gravity {0 47
+              1 42
+              2 37
+              3 32
+              4 27
+              5 22
+              6 17
+              7 12
+              8 7
+              9 5
+              10 4
+              11 4
+              12 4
+              13 3
+              14 3
+              15 3
+              16 2
+              17 2
+              18 2
+              19 1
+              20 1
+              21 1
+              22 1
+              23 1
+              24 1
+              25 1
+              26 1
+              27 1
+              28 1})

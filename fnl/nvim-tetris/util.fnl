@@ -55,7 +55,7 @@
 ; nil -> int
 (defn get_gravity [level]
   (if (> level const.max_level)
-    1
+    0
     (. const.gravity level)))
 
 (defn get_shadow_offset [piece_squares occupied_squares]
