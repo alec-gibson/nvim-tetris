@@ -77,7 +77,7 @@
   (close_timer))
 
 (defn- do_game_over []
-  (print "GAME OVER")
+  (print "Game over at level" level)
   (stop_game))
 
 (defn- init_appearing []

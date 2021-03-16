@@ -188,7 +188,7 @@ local do_game_over = nil
 do
   local v_0_ = nil
   local function do_game_over0()
-    print("GAME OVER")
+    print("Game over at level", level)
     return stop_game()
   end
   v_0_ = do_game_over0
