@@ -16,7 +16,8 @@
                   "paused" 4
                   "gameover" 5})
 
-(def colours {:TetrisBackground "#111111"
+(def colours {:TetrisBackground "Black"
+              :TetrisHeader "DarkGray"
               :TetrisIPiece "Cyan"
               :TetrisJPiece "Blue"
               :TetrisLPiece "Orange"
