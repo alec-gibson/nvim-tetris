@@ -85,7 +85,7 @@ local max_level = nil
 do
   local v_0_ = nil
   do
-    local v_0_0 = 28
+    local v_0_0 = 18
     _0_0["max_level"] = v_0_0
     v_0_ = v_0_0
   end
@@ -133,7 +133,7 @@ local lines_per_level = nil
 do
   local v_0_ = nil
   do
-    local v_0_0 = 5
+    local v_0_0 = 10
     _0_0["lines_per_level"] = v_0_0
     v_0_ = v_0_0
   end
@@ -193,7 +193,7 @@ local gravity = nil
 do
   local v_0_ = nil
   do
-    local v_0_0 = {42, 37, 32, 27, 22, 17, 12, 7, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, [0] = 47}
+    local v_0_0 = {25, 20, 16, 13, 10, 8, 6, 7, 6, 5, 4, 4, 3, 3, 2, 2, 1, 1, [0] = 30}
     _0_0["gravity"] = v_0_0
     v_0_ = v_0_0
   end

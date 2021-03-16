@@ -4,11 +4,11 @@
 (def columns 10)
 (def screen_rows 20)
 (def screen_cols 10)
-(def max_level 28) ; after level 28, all levels are same speed
+(def max_level 18) ; after level 18, all levels are same speed
 (def frame_delay (math.floor (/ 1000 60)))
 (def lock_delay 10) ; in frames. My game will support move reset - successfully moving or rotating resets the lock delay
 (def entry_delay 10) ; in frames. Time between previous piece locking and new piece starting to fall
-(def lines_per_level 5)
+(def lines_per_level 10)
 
 (def game_states {"appearing" 0
                   "falling" 1
@@ -80,35 +80,23 @@
                    :wallkick_offsets wallkick_offsets.normal}])
 
 ; level -> frames taken to drop one gridcell
-; if level > 28, 1 frame is taken to drop one gridcell
-; (values stolen from NES tetris)
-; https://harddrop.com/wiki/Tetris_(NES,_Nintendo)
-(def gravity {0 47
-              1 42
-              2 37
-              3 32
-              4 27
-              5 22
-              6 17
-              7 12
+; if level > max_level, 1 frame is taken to drop one gridcell
+(def gravity {0 30
+              1 25
+              2 20
+              3 16
+              4 13
+              5 10
+              6 8
+              7 6
               8 7
-              9 5
-              10 4
+              9 6
+              10 5
               11 4
               12 4
               13 3
               14 3
-              15 3
+              15 2
               16 2
-              17 2
-              18 2
-              19 1
-              20 1
-              21 1
-              22 1
-              23 1
-              24 1
-              25 1
-              26 1
-              27 1
-              28 1})
+              17 1
+              18 1})
