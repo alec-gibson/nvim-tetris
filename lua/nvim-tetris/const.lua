@@ -129,6 +129,18 @@ do
   t_0_["entry_delay"] = v_0_
   entry_delay = v_0_
 end
+local lines_per_level = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = 5
+    _0_0["lines_per_level"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["lines_per_level"] = v_0_
+  lines_per_level = v_0_
+end
 local game_states = nil
 do
   local v_0_ = nil

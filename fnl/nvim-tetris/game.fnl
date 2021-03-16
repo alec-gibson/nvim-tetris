@@ -47,7 +47,7 @@
       (when (util.row_full? row occupied_squares)
         (remove_row row)
         (set lines_cleared (a.inc lines_cleared))
-        (when (= 0 (% lines_cleared 10))
+        (when (= 0 (% lines_cleared const.lines_per_level))
           (set level (a.inc level)))))))
 
 (defn- lock_piece []
