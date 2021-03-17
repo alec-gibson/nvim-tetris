@@ -7,6 +7,10 @@ This plugin is written in [Fennel](https://fennel-lang.org/) using Olical's proj
 
 nvim-tetris is a work-in-progress, and is not feature complete.
 
+You can install the plugin just like any other Neovim plugin. I personally use [vim-plug](https://github.com/junegunn/vim-plug).
+
+After installing, you can launch a game of Tetris using the `:Tetris` command.
+
 ## Controls
 - Left Arrow: move left
 - Right Arrow: move right
@@ -15,9 +19,9 @@ nvim-tetris is a work-in-progress, and is not feature complete.
 - Space Bar: hard drop
 
 ## What Works
-- Core game functions including controlling the dropping piece, clearing lines, and gameover when you run out of space
-- Level progression - you move up a level every 10 lines cleared, and the game gets faster with each level progressed
-- Short delays for when a piece appears and locks, and the locking delay resets when rotating or moving your piece (to make gameplay more fun at high speeds)
+- Core game functions including controlling the current piece, clearing lines, and gameover when you run out of space
+- Level progression - you progress a level every 10 lines cleared, and the game gets faster with each level
+- Short delays when a piece appears and locks, and the locking delay resets when rotating or moving your piece (to make gameplay more fun at high speeds)
 - Correct rotation behaviour including wall-kicks according to "How Guideline SRS Really Works" from https://harddrop.com/wiki/SRS (this means T-spins work)
 
 ## Next Steps
@@ -27,5 +31,6 @@ nvim-tetris is a work-in-progress, and is not feature complete.
 - Add intro screen which shows controls
 - Add logic for score
 - Configuration
+- Documentation
 - Tests
 - Stretch goals: music, online leaderboards, ...
