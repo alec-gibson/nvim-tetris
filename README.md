@@ -3,9 +3,9 @@ Bringing emacs' greatest feature to neovim - Tetris!
 
 ![Gameplay Screenshot](./gameplay.png "Some poorly executed demo gameplay")
 
-This plugin is written in [Fennel](https://fennel-lang.org/) using Olical's project [Aniseed](https://github.com/Olical/aniseed) for creating the project structure, and as a library of helper functions and macros. The game compiles to Lua and uses neovim API functions, so it is not currently a goal to support Vim.
+This plugin is written in [Fennel](https://fennel-lang.org/) using Olical's project [Aniseed](https://github.com/Olical/aniseed) for creating the project structure, and as a library of helper functions and macros. The game compiles to Lua and uses Neovim API functions, so Vim support is not currently a goal.
 
-nvim-tetris is currently a work-in-progress, and is not feature complete.
+nvim-tetris is a work-in-progress, and is not feature complete.
 
 ## Controls
 - Left Arrow: move left
