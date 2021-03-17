@@ -7,9 +7,11 @@ This plugin is written in [Fennel](https://fennel-lang.org/) using Olical's proj
 
 nvim-tetris is a work-in-progress, and is not feature complete.
 
-You can install the plugin just like any other Neovim plugin. I personally use [vim-plug](https://github.com/junegunn/vim-plug).
-
-After installing, you can launch a game of Tetris using the `:Tetris` command.
+## How To Install
+- Prerequisites: neovim
+- You can install the plugin just like any other Neovim plugin. I personally use [vim-plug](https://github.com/junegunn/vim-plug).
+- Another way to install would be to just clone this repo into `~/.local/share/nvim/site/pack/*/start/`, where `*` is whatever you choose (I use "alec").
+- After installing, you can launch a game of Tetris using the `:Tetris` command inside Neovim.
 
 ## Controls
 - Left Arrow: move left
