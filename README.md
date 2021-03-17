@@ -21,7 +21,7 @@ After installing, you can launch a game of Tetris using the `:Tetris` command.
 ## What Works
 - Core game functions including controlling the current piece, clearing lines, and gameover when you run out of space
 - Level progression - you progress a level every 10 lines cleared, and the game gets faster with each level
-- Short delays when a piece appears and locks, and the locking delay resets when rotating or moving your piece (to make gameplay more fun at high speeds)
+- Short delays when the piece appears and when it locks. The locking delay resets when rotating or moving your piece, to make gameplay more fun at high speeds
 - Correct rotation behaviour including wall-kicks according to "How Guideline SRS Really Works" from https://harddrop.com/wiki/SRS (this means T-spins work)
 
 ## Next Steps
@@ -33,4 +33,4 @@ After installing, you can launch a game of Tetris using the `:Tetris` command.
 - Configuration
 - Documentation
 - Tests
-- Stretch goals: music, online leaderboards, ...
+- Stretch goals: music, leaderboards?, ...
