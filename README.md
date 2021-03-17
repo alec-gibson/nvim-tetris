@@ -22,6 +22,7 @@ nvim-tetris is a work-in-progress, and is not feature complete.
 
 ## What Works
 - Core game functions including controlling the current piece, clearing lines, and gameover when you run out of space
+- Piece shadow showing where the current piece will land
 - Level progression - you progress a level every 10 lines cleared, and the game gets faster with each level
 - Short delays when the piece appears and when it locks. The locking delay resets when rotating or moving your piece, to make gameplay more fun at high speeds
 - Correct rotation behaviour including wall-kicks according to "How Guideline SRS Really Works" from https://harddrop.com/wiki/SRS (this means T-spins work)
