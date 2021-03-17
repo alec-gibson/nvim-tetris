@@ -3,15 +3,29 @@ Bringing emacs' greatest feature to neovim - Tetris!
 
 ![Gameplay Screenshot](./gameplay.png "Some poorly executed demo gameplay")
 
-This plugin is written in [Fennel](https://fennel-lang.org/) using Olical's project [Aniseed](https://github.com/Olical/aniseed) for creating the project structure, and as a library of helper functions and macros.
+This plugin is written in [Fennel](https://fennel-lang.org/) using Olical's project [Aniseed](https://github.com/Olical/aniseed) for creating the project structure, and as a library of helper functions and macros. The game compiles to Lua and uses neovim API functions, so it is not currently a goal to support Vim.
 
-This plugin is IN PROGRESS, and is currently pretty far from being feature-complete.
+nvim-tetris is currently a work-in-progress, and is not feature complete.
+
+## Controls
+- Left Arrow: move left
+- Right Arrow: move right
+- Up Arrow: rotate piece
+- Down Arrow: soft drop
+- Space Bar: hard drop
+
+## What Works
+- Core game functions including controlling the dropping piece, clearing lines, and gameover when you run out of space
+- Level progression - you move up a level every 10 lines cleared, and the game gets faster with each level progressed
+- Short delays for when a piece appears and locks, and the locking delay resets when rotating or moving your piece (to make gameplay more fun at high speeds)
+- Correct rotation behaviour including wall-kicks according to "How Guideline SRS Really Works" from https://harddrop.com/wiki/SRS (this means T-spins work)
 
 ## Next Steps
-- Fully cleanup when closing the tetris buffer, so you can run `:Tetris` again
-- Add UI border showing current level, current score, next piece, saved piece (and add logic for saving pieces)
+- Add border showing current level, current score, next piece, saved piece (and add logic for saving pieces)
 - Add pause screen (with options to resume game, start new game or quit)
 - Add game over screen (with options to play again or quit)
 - Add intro screen which shows controls
 - Add logic for score
-- Stretch goals: multiple tetris buffers, music, online leaderboards, ...
+- Configuration
+- Tests
+- Stretch goals: music, online leaderboards, ...
