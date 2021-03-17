@@ -3,6 +3,7 @@
             util nvim-tetris.util
             v nvim-tetris.aniseed.view
             tetris_io nvim-tetris.io
+            luv luv
             a nvim-tetris.aniseed.core}})
 
 ; ------------ ALIASES -------------
@@ -12,24 +13,24 @@
 
 ; -------- CONSTS AND VARS ---------
 
-(def- occupied_squares {}) ; 2D table of bools indicating squares occupied by locked pieces (for collision detection)
-(var piece {}) ; current piece being controlled by the player
-(var piece_pivot [5 20]) ; current piece pivot location (column, row)
-(var shadow_offset 0)
-(var piece_rotation 0)
-(var game_state states.intro)
+(var occupied_squares nil) ; 2D table of bools indicating squares occupied by locked pieces (for collision detection)
+(var piece nil) ; current piece being controlled by the player
+(var piece_pivot nil) ; current piece pivot location (column, row)
+(var shadow_offset nil)
+(var piece_rotation nil)
+(var game_state nil)
 (var timer nil)
-(var remaining_appearing_frames 0)
-(var falling_delay_frames 0)
-(var locking_delay_frames 0)
+(var remaining_appearing_frames nil)
+(var falling_delay_frames nil)
+(var locking_delay_frames nil)
 
 ;; FOR LEVEL PROGRESSION
-(var level 0) ; TODO
-(var lines_cleared 0) ; TODO
+(var level nil)
+(var lines_cleared nil)
 
 ;; FOR SAVING PIECES
-(var next_piece 1) ; TODO
-(var saved_piece 1) ; TODO
+(var next_piece nil) ; TODO
+(var saved_piece nil) ; TODO
 
 ; --------- HELPER FUNCS -----------
 
@@ -74,7 +75,8 @@
 ; ---------- INIT STATES -----------
 
 (defn stop_game []
-  (close_timer))
+  (when (not (timer:is_closing))
+          (close_timer)))
 
 (defn- do_game_over []
   (print "Game over at level" level)
@@ -227,15 +229,35 @@
 (defn- init_timer [] 
   (set timer (vim.loop.new_timer)))
 
+(defn- init_globals []
+  (set occupied_squares {})
+  (set piece {})
+  (set piece_pivot [5 20])
+  (set shadow_offset 0)
+  (set piece_rotation 0)
+  (set game_state states.intro)
+  (set timer nil)
+  (set remaining_appearing_frames 0)
+  (set falling_delay_frames 0)
+  (set locking_delay_frames 0)
+  (set level 0)
+  (set lines_cleared 0)
+  (set next_piece 1)
+  (set saved_piece 1))
+
+(defn- init_game []
+  (init_globals)
+  (init_occupied_squares)
+  (init_timer)
+  (start_timer))
+
 ; ---------- MAIN FUNCTION -------------
 
 (defn start []
   (tetris_io.init_window)
-  (init_occupied_squares)
-  (init_timer)
   (tetris_io.set_game_maps)
   (tetris_io.prepare_game_cleanup)
-  (start_timer))
+  (init_game))
 
 ; (start)
 ; (close_timer)

@@ -78,7 +78,7 @@
   (each [group colour (pairs const.colours)]
     (api.nvim_command (.. "hi " group " guifg=" colour))))
 
-; TODO create the initial buffer and window for drawing the game in
+; create the initial buffer and window for drawing the game in
 (defn init_window []
   (set buf (api.nvim_create_buf false true))
   (api.nvim_buf_set_option buf "bufhidden" "wipe")

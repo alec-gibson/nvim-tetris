@@ -19,11 +19,11 @@ end
 local function _1_(...)
   local ok_3f_0_, val_0_ = nil, nil
   local function _1_()
-    return {require("nvim-tetris.aniseed.core"), require("nvim-tetris.const"), require("nvim-tetris.io"), require("nvim-tetris.util"), require("nvim-tetris.aniseed.view")}
+    return {require("nvim-tetris.aniseed.core"), require("nvim-tetris.const"), require("luv"), require("nvim-tetris.io"), require("nvim-tetris.util"), require("nvim-tetris.aniseed.view")}
   end
   ok_3f_0_, val_0_ = pcall(_1_)
   if ok_3f_0_ then
-    _0_0["aniseed/local-fns"] = {require = {a = "nvim-tetris.aniseed.core", const = "nvim-tetris.const", tetris_io = "nvim-tetris.io", util = "nvim-tetris.util", v = "nvim-tetris.aniseed.view"}}
+    _0_0["aniseed/local-fns"] = {require = {a = "nvim-tetris.aniseed.core", const = "nvim-tetris.const", luv = "luv", tetris_io = "nvim-tetris.io", util = "nvim-tetris.util", v = "nvim-tetris.aniseed.view"}}
     return val_0_
   else
     return print(val_0_)
@@ -32,9 +32,10 @@ end
 local _local_0_ = _1_(...)
 local a = _local_0_[1]
 local const = _local_0_[2]
-local tetris_io = _local_0_[3]
-local util = _local_0_[4]
-local v = _local_0_[5]
+local luv = _local_0_[3]
+local tetris_io = _local_0_[4]
+local util = _local_0_[5]
+local v = _local_0_[6]
 local _2amodule_2a = _0_0
 local _2amodule_name_2a = "nvim-tetris.game"
 do local _ = ({nil, _0_0, {{}, nil, nil, nil}})[2] end
@@ -53,25 +54,19 @@ do
   api = v_0_
 end
 local occupied_squares = nil
-do
-  local v_0_ = {}
-  local t_0_ = (_0_0)["aniseed/locals"]
-  t_0_["occupied_squares"] = v_0_
-  occupied_squares = v_0_
-end
-local piece = {}
-local piece_pivot = {5, 20}
-local shadow_offset = 0
-local piece_rotation = 0
-local game_state = states.intro
+local piece = nil
+local piece_pivot = nil
+local shadow_offset = nil
+local piece_rotation = nil
+local game_state = nil
 local timer = nil
-local remaining_appearing_frames = 0
-local falling_delay_frames = 0
-local locking_delay_frames = 0
-local level = 0
-local lines_cleared = 0
-local next_piece = 1
-local saved_piece = 1
+local remaining_appearing_frames = nil
+local falling_delay_frames = nil
+local locking_delay_frames = nil
+local level = nil
+local lines_cleared = nil
+local next_piece = nil
+local saved_piece = nil
 local remove_row = nil
 do
   local v_0_ = nil
@@ -174,7 +169,9 @@ do
   do
     local v_0_0 = nil
     local function stop_game0()
-      return close_timer()
+      if not timer:is_closing() then
+        return close_timer()
+      end
     end
     v_0_0 = stop_game0
     _0_0["stop_game"] = v_0_0
@@ -548,6 +545,45 @@ do
   t_0_["init_timer"] = v_0_
   init_timer = v_0_
 end
+local init_globals = nil
+do
+  local v_0_ = nil
+  local function init_globals0()
+    occupied_squares = {}
+    piece = {}
+    piece_pivot = {5, 20}
+    shadow_offset = 0
+    piece_rotation = 0
+    game_state = states.intro
+    timer = nil
+    remaining_appearing_frames = 0
+    falling_delay_frames = 0
+    locking_delay_frames = 0
+    level = 0
+    lines_cleared = 0
+    next_piece = 1
+    saved_piece = 1
+    return nil
+  end
+  v_0_ = init_globals0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["init_globals"] = v_0_
+  init_globals = v_0_
+end
+local init_game = nil
+do
+  local v_0_ = nil
+  local function init_game0()
+    init_globals()
+    init_occupied_squares()
+    init_timer()
+    return start_timer()
+  end
+  v_0_ = init_game0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["init_game"] = v_0_
+  init_game = v_0_
+end
 local start = nil
 do
   local v_0_ = nil
@@ -555,11 +591,9 @@ do
     local v_0_0 = nil
     local function start0()
       tetris_io.init_window()
-      init_occupied_squares()
-      init_timer()
       tetris_io.set_game_maps()
       tetris_io.prepare_game_cleanup()
-      return start_timer()
+      return init_game()
     end
     v_0_0 = start0
     _0_0["start"] = v_0_0
