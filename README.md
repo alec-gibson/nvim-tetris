@@ -1,6 +1,8 @@
 # nvim-tetris
 Bringing emacs' greatest feature to neovim - Tetris!
 
+![Gameplay Screenshot](./gameplay.png "Some poorly executed demo gameplay")
+
 This plugin is written in [Fennel](https://fennel-lang.org/) using Olical's project [Aniseed](https://github.com/Olical/aniseed) for creating the project structure, and as a library of helper functions and macros.
 
 This plugin is IN PROGRESS, and is currently pretty far from being feature-complete.
