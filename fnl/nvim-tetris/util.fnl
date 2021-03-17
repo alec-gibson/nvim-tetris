@@ -84,7 +84,7 @@
                     ))) false piece_squares))
 
 (defn get_random_piece []
-  (. const.piece_types (math.ceil (a.rand (a.count const.piece_types)))))
+  (. const.piece_types (math.ceil (math.random (a.count const.piece_types)))))
 
 (defn row_full? [row occupied_squares]
   (a.reduce (fn [is_clear val] (and is_clear val)) true (. occupied_squares row)))

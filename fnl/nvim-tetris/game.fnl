@@ -248,6 +248,7 @@
 (defn- init_game []
   (init_globals)
   (init_occupied_squares)
+  (math.randomseed (os.time))
   (init_timer)
   (start_timer))
 

@@ -576,6 +576,7 @@ do
   local function init_game0()
     init_globals()
     init_occupied_squares()
+    math.randomseed(os.time())
     init_timer()
     return start_timer()
   end
