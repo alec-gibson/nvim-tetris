@@ -33,7 +33,7 @@ nvim-tetris is a work-in-progress, and is not feature complete.
 - Add game over screen (with options to play again or quit)
 - Add intro screen which shows controls
 - Add logic for score
-- Configuration
+- Configuration (colourscheme, keybindings, starting level, integer scaling)
 - Documentation
 - Tests
 - Stretch goals: music, leaderboards?, ...
