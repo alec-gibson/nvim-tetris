@@ -2,7 +2,6 @@ if exists('g:loaded_nvim_tetris') | finish | endif " prevent loading file twice
 
 let s:save_cpo = &cpo " save user coptions
 set cpo&vim " reset them to defaults
-set termguicolors
 
 if has("nvim")
   command Tetris lua require("nvim-tetris.main").init()
