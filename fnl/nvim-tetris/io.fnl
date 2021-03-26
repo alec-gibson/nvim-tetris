@@ -75,8 +75,8 @@
 
 ; Sets all the tetris highlights based on the `colours` array in const.fnl
 (defn- init_highlights []
-  (each [group colour (pairs const.colours)]
-    (api.nvim_command (.. "hi " group " guifg=" colour))))
+  (each [group colours (pairs const.colours)]
+    (api.nvim_command (.. "hi " group " guifg=" colours.guifg " ctermfg=" colours.ctermfg))))
 
 ; create the initial buffer and window for drawing the game in
 (defn init_window []

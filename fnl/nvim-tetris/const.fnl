@@ -17,16 +17,16 @@
                   "paused" 4
                   "gameover" 5})
 
-(def colours {:TetrisBackground "Black"
-              :TetrisHeader "DarkGray"
-              :TetrisIPiece "Cyan"
-              :TetrisJPiece "Blue"
-              :TetrisLPiece "Orange"
-              :TetrisOPiece "Yellow"
-              :TetrisSPiece "Green"
-              :TetrisTPiece "Purple"
-              :TetrisZPiece "Red"
-              :TetrisShadow "LightGray"})
+(def colours {:TetrisBackground {:guifg "Black" :ctermfg "Black"}
+              :TetrisHeader {:guifg "DarkGray" :ctermfg "DarkGray"}
+              :TetrisIPiece {:guifg "Cyan" :ctermfg "DarkCyan"}
+              :TetrisJPiece {:guifg "Blue" :ctermfg "DarkBlue"}
+              :TetrisLPiece {:guifg "Orange" :ctermfg "Brown"}
+              :TetrisOPiece {:guifg "Yellow" :ctermfg "Yellow"}
+              :TetrisSPiece {:guifg "Green" :ctermfg "DarkGreen"}
+              :TetrisTPiece {:guifg "Purple" :ctermfg "DarkMagenta"}
+              :TetrisZPiece {:guifg "Red" :ctermfg "DarkRed"}
+              :TetrisShadow {:guifg "LightGray" :ctermfg "LightGray"}})
 
 ; following "How Guideline SRS Really Works" from https://harddrop.com/wiki/SRS
 ; How wallkicking works: say we're changing an I piece from rotation state 0 to 1
