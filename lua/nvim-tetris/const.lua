@@ -157,7 +157,7 @@ local colours = nil
 do
   local v_0_ = nil
   do
-    local v_0_0 = {TetrisBackground = "Black", TetrisHeader = "DarkGray", TetrisIPiece = "Cyan", TetrisJPiece = "Blue", TetrisLPiece = "Orange", TetrisOPiece = "Yellow", TetrisSPiece = "Green", TetrisShadow = "LightGray", TetrisTPiece = "Purple", TetrisZPiece = "Red"}
+    local v_0_0 = {TetrisBackground = {ctermfg = "Black", guifg = "Black"}, TetrisHeader = {ctermfg = "DarkGray", guifg = "DarkGray"}, TetrisIPiece = {ctermfg = "Cyan", guifg = "Cyan"}, TetrisJPiece = {ctermfg = "Blue", guifg = "Blue"}, TetrisLPiece = {ctermfg = "Brown", guifg = "Orange"}, TetrisOPiece = {ctermfg = "Yellow", guifg = "Yellow"}, TetrisSPiece = {ctermfg = "Green", guifg = "Green"}, TetrisShadow = {ctermfg = "LightGray", guifg = "LightGray"}, TetrisTPiece = {ctermfg = "DarkMagenta", guifg = "Purple"}, TetrisZPiece = {ctermfg = "Red", guifg = "Red"}}
     _0_0["colours"] = v_0_0
     v_0_ = v_0_0
   end

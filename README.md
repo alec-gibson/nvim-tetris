@@ -12,6 +12,7 @@ nvim-tetris is a work-in-progress, and is not feature complete.
 - You can install the plugin just like any other Neovim plugin. I personally use [vim-plug](https://github.com/junegunn/vim-plug).
 - Another way to install would be to just clone this repo into `~/.local/share/nvim/site/pack/*/start/`, where `*` is whatever you choose (I use "alec").
 - After installing, you can launch a game of Tetris using the `:Tetris` command inside Neovim.
+- If your colours look weird, ensure you are using a terminal which supports true colour, you have configured tmux for true colour support if you are using tmux, and you have the `termguicolors` option enabled in Neovim.
 
 ## Controls
 - Left Arrow: move left

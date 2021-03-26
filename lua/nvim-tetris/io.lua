@@ -291,8 +291,8 @@ local init_highlights = nil
 do
   local v_0_ = nil
   local function init_highlights0()
-    for group, colour in pairs(const.colours) do
-      api.nvim_command(("hi " .. group .. " guifg=" .. colour))
+    for group, colours in pairs(const.colours) do
+      api.nvim_command(("hi " .. group .. " guifg=" .. colours.guifg .. " ctermfg=" .. colours.ctermfg))
     end
     return nil
   end
