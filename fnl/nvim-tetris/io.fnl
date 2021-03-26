@@ -46,12 +46,18 @@
             end_hl (+ start_hl (* square_width square_bytes_per_char))]
         (api.nvim_buf_add_highlight buf ns colour y start_hl end_hl)))))
 
+; TODO: apply border offsets to convert square locations in game space to
+; buffer space
 (defn draw_piece_squares [squares]
   (draw_squares squares piece_ns))
 
+; TODO: apply border offsets to convert square locations in game space to
+; buffer space
 (defn draw_shadow_squares [squares]
   (draw_squares squares shadow_ns))
 
+; TODO: apply border offsets to convert square locations in game space to
+; buffer space
 (defn draw_locked_squares [squares]
   (draw_squares squares locked_ns))
 

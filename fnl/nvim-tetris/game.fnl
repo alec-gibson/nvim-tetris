@@ -29,6 +29,7 @@
 (var lines_cleared nil)
 
 ;; FOR SAVING PIECES
+(var upcoming_pieces nil)
 (var next_piece nil) ; TODO
 (var saved_piece nil) ; TODO
 
@@ -72,6 +73,28 @@
 (defn- close_timer []
   (timer:close))
 
+; insert repeats_per_block copies of each piece to upcoming_pieces
+; then shuffle upcoming_pieces using fisher-yates
+(defn- generate_upcoming_pieces []
+  (set upcoming_pieces [])
+  (let [num_piece_types (a.count const.piece_types)]
+    ; generate pieces
+    (for [i 1 num_piece_types]
+      (for [j 1 const.repeats_per_block]
+        (table.insert upcoming_pieces i)))
+    ; shuffle
+    (for [i (* num_piece_types const.repeats_per_block) 2 -1]
+      (let [j (math.ceil (math.random (- i 1)))]
+        (let [i_val (. upcoming_pieces i)
+              j_val (. upcoming_pieces j)]
+          (tset upcoming_pieces i j_val)
+          (tset upcoming_pieces j i_val))))))
+
+(defn- get_next_piece []
+  (set next_piece (. const.piece_types (table.remove upcoming_pieces)))
+  (if (= 0 (a.count upcoming_pieces))
+    (generate_upcoming_pieces)))
+
 ; ---------- INIT STATES -----------
 
 (defn stop_game []
@@ -84,9 +107,10 @@
 
 (defn- init_appearing []
   (set remaining_appearing_frames const.entry_delay)
-  (set piece (util.get_random_piece))
+  (set piece next_piece)
   (set piece_pivot [5 20])
   (set piece_rotation 0)
+  (get_next_piece)
   (when (util.piece_collides_or_out_of_bounds? (util.get_piece_squares piece_pivot piece piece_rotation) occupied_squares)
     (do_game_over))
   (set game_state states.appearing))
@@ -242,6 +266,7 @@
   (set locking_delay_frames 0)
   (set level 0)
   (set lines_cleared 0)
+  (set upcoming_pieces [])
   (set next_piece 1)
   (set saved_piece 1))
 
@@ -249,6 +274,8 @@
   (init_globals)
   (init_occupied_squares)
   (math.randomseed (os.time))
+  (generate_upcoming_pieces)
+  (get_next_piece)
   (init_timer)
   (start_timer))
 

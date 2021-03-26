@@ -141,6 +141,18 @@ do
   t_0_["lines_per_level"] = v_0_
   lines_per_level = v_0_
 end
+local repeats_per_block = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = 4
+    _0_0["repeats_per_block"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["repeats_per_block"] = v_0_
+  repeats_per_block = v_0_
+end
 local game_states = nil
 do
   local v_0_ = nil
@@ -157,7 +169,7 @@ local colours = nil
 do
   local v_0_ = nil
   do
-    local v_0_0 = {TetrisBackground = {ctermfg = "Black", guifg = "Black"}, TetrisHeader = {ctermfg = "DarkGray", guifg = "DarkGray"}, TetrisIPiece = {ctermfg = "Cyan", guifg = "Cyan"}, TetrisJPiece = {ctermfg = "Blue", guifg = "Blue"}, TetrisLPiece = {ctermfg = "Brown", guifg = "Orange"}, TetrisOPiece = {ctermfg = "Yellow", guifg = "Yellow"}, TetrisSPiece = {ctermfg = "Green", guifg = "Green"}, TetrisShadow = {ctermfg = "LightGray", guifg = "LightGray"}, TetrisTPiece = {ctermfg = "DarkMagenta", guifg = "Purple"}, TetrisZPiece = {ctermfg = "Red", guifg = "Red"}}
+    local v_0_0 = {TetrisBackground = {ctermfg = "Black", guifg = "Black"}, TetrisHeader = {ctermfg = "DarkGray", guifg = "DarkGray"}, TetrisIPiece = {ctermfg = "DarkCyan", guifg = "Cyan"}, TetrisJPiece = {ctermfg = "DarkBlue", guifg = "Blue"}, TetrisLPiece = {ctermfg = "Brown", guifg = "Orange"}, TetrisOPiece = {ctermfg = "Yellow", guifg = "Yellow"}, TetrisSPiece = {ctermfg = "DarkGreen", guifg = "Green"}, TetrisShadow = {ctermfg = "LightGray", guifg = "LightGray"}, TetrisTPiece = {ctermfg = "DarkMagenta", guifg = "Purple"}, TetrisZPiece = {ctermfg = "DarkRed", guifg = "Red"}}
     _0_0["colours"] = v_0_0
     v_0_ = v_0_0
   end

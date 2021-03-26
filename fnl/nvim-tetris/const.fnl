@@ -9,6 +9,7 @@
 (def lock_delay 10) ; in frames. My game will support move reset - successfully moving or rotating resets the lock delay
 (def entry_delay 10) ; in frames. Time between previous piece locking and new piece starting to fall
 (def lines_per_level 10)
+(def repeats_per_block 4) ; number of same piece in each block of upcoming pieces
 
 (def game_states {"appearing" 0
                   "falling" 1

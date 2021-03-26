@@ -65,6 +65,7 @@ local falling_delay_frames = nil
 local locking_delay_frames = nil
 local level = nil
 local lines_cleared = nil
+local upcoming_pieces = nil
 local next_piece = nil
 local saved_piece = nil
 local remove_row = nil
@@ -163,6 +164,45 @@ do
   t_0_["close_timer"] = v_0_
   close_timer = v_0_
 end
+local generate_upcoming_pieces = nil
+do
+  local v_0_ = nil
+  local function generate_upcoming_pieces0()
+    upcoming_pieces = {}
+    local num_piece_types = a.count(const.piece_types)
+    for i = 1, num_piece_types do
+      for j = 1, const.repeats_per_block do
+        table.insert(upcoming_pieces, i)
+      end
+    end
+    for i = (num_piece_types * const.repeats_per_block), 2, -1 do
+      local j = math.ceil(math.random((i - 1)))
+      local i_val = upcoming_pieces[i]
+      local j_val = upcoming_pieces[j]
+      upcoming_pieces[i] = j_val
+      upcoming_pieces[j] = i_val
+    end
+    return nil
+  end
+  v_0_ = generate_upcoming_pieces0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["generate_upcoming_pieces"] = v_0_
+  generate_upcoming_pieces = v_0_
+end
+local get_next_piece = nil
+do
+  local v_0_ = nil
+  local function get_next_piece0()
+    next_piece = const.piece_types[table.remove(upcoming_pieces)]
+    if (0 == a.count(upcoming_pieces)) then
+      return generate_upcoming_pieces()
+    end
+  end
+  v_0_ = get_next_piece0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["get_next_piece"] = v_0_
+  get_next_piece = v_0_
+end
 local stop_game = nil
 do
   local v_0_ = nil
@@ -198,9 +238,10 @@ do
   local v_0_ = nil
   local function init_appearing0()
     remaining_appearing_frames = const.entry_delay
-    piece = util.get_random_piece()
+    piece = next_piece
     piece_pivot = {5, 20}
     piece_rotation = 0
+    get_next_piece()
     if util["piece_collides_or_out_of_bounds?"](util.get_piece_squares(piece_pivot, piece, piece_rotation), occupied_squares) then
       do_game_over()
     end
@@ -561,6 +602,7 @@ do
     locking_delay_frames = 0
     level = 0
     lines_cleared = 0
+    upcoming_pieces = {}
     next_piece = 1
     saved_piece = 1
     return nil
@@ -577,6 +619,8 @@ do
     init_globals()
     init_occupied_squares()
     math.randomseed(os.time())
+    generate_upcoming_pieces()
+    get_next_piece()
     init_timer()
     return start_timer()
   end
