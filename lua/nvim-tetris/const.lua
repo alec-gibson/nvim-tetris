@@ -57,30 +57,6 @@ do
   t_0_["columns"] = v_0_
   columns = v_0_
 end
-local screen_rows = nil
-do
-  local v_0_ = nil
-  do
-    local v_0_0 = 20
-    _0_0["screen_rows"] = v_0_0
-    v_0_ = v_0_0
-  end
-  local t_0_ = (_0_0)["aniseed/locals"]
-  t_0_["screen_rows"] = v_0_
-  screen_rows = v_0_
-end
-local screen_cols = nil
-do
-  local v_0_ = nil
-  do
-    local v_0_0 = 10
-    _0_0["screen_cols"] = v_0_0
-    v_0_ = v_0_0
-  end
-  local t_0_ = (_0_0)["aniseed/locals"]
-  t_0_["screen_cols"] = v_0_
-  screen_cols = v_0_
-end
 local max_level = nil
 do
   local v_0_ = nil
@@ -141,6 +117,102 @@ do
   t_0_["lines_per_level"] = v_0_
   lines_per_level = v_0_
 end
+local repeats_per_block = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = 4
+    _0_0["repeats_per_block"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["repeats_per_block"] = v_0_
+  repeats_per_block = v_0_
+end
+local sidebar_width = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = 6
+    _0_0["sidebar_width"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["sidebar_width"] = v_0_
+  sidebar_width = v_0_
+end
+local screen_rows = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = 20
+    _0_0["screen_rows"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["screen_rows"] = v_0_
+  screen_rows = v_0_
+end
+local screen_cols = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = (columns + (2 * sidebar_width))
+    _0_0["screen_cols"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["screen_cols"] = v_0_
+  screen_cols = v_0_
+end
+local next_pivot = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = {(columns + 3), 18}
+    _0_0["next_pivot"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["next_pivot"] = v_0_
+  next_pivot = v_0_
+end
+local next_rotation = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = 0
+    _0_0["next_rotation"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["next_rotation"] = v_0_
+  next_rotation = v_0_
+end
+local held_pivot = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = {-3, 18}
+    _0_0["held_pivot"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["held_pivot"] = v_0_
+  held_pivot = v_0_
+end
+local held_rotation = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = 0
+    _0_0["held_rotation"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["held_rotation"] = v_0_
+  held_rotation = v_0_
+end
 local game_states = nil
 do
   local v_0_ = nil
@@ -157,7 +229,7 @@ local colours = nil
 do
   local v_0_ = nil
   do
-    local v_0_0 = {TetrisBackground = "Black", TetrisHeader = "DarkGray", TetrisIPiece = "Cyan", TetrisJPiece = "Blue", TetrisLPiece = "Orange", TetrisOPiece = "Yellow", TetrisSPiece = "Green", TetrisShadow = "LightGray", TetrisTPiece = "Purple", TetrisZPiece = "Red"}
+    local v_0_0 = {TetrisBackground = {ctermfg = "Black", guifg = "Black"}, TetrisHeader = {ctermfg = "LightGray", guifg = "LightGray"}, TetrisIPiece = {ctermfg = "DarkCyan", guifg = "Cyan"}, TetrisJPiece = {ctermfg = "DarkBlue", guifg = "Blue"}, TetrisLPiece = {ctermfg = "Brown", guifg = "Orange"}, TetrisOPiece = {ctermfg = "Yellow", guifg = "Yellow"}, TetrisSPiece = {ctermfg = "DarkGreen", guifg = "Green"}, TetrisShadow = {ctermfg = "LightGray", guifg = "LightGray"}, TetrisSidebar = {ctermfg = "DarkGray", guifg = "#222222"}, TetrisTPiece = {ctermfg = "DarkMagenta", guifg = "Purple"}, TetrisZPiece = {ctermfg = "DarkRed", guifg = "Red"}}
     _0_0["colours"] = v_0_0
     v_0_ = v_0_0
   end
@@ -181,7 +253,7 @@ local piece_types = nil
 do
   local v_0_ = nil
   do
-    local v_0_0 = {{colour = "TetrisIPiece", name = "I", square_offsets = {{-1, 0}, {0, 0}, {1, 0}, {2, 0}}, wallkick_offsets = wallkick_offsets.I}, {colour = "TetrisJPiece", name = "J", square_offsets = {{-1, 1}, {-1, 0}, {0, 0}, {1, 0}}, wallkick_offsets = wallkick_offsets.normal}, {colour = "TetrisLPiece", name = "L", square_offsets = {{-1, 0}, {0, 0}, {1, 0}, {1, 1}}, wallkick_offsets = wallkick_offsets.normal}, {colour = "TetrisOPiece", name = "O", square_offsets = {{0, 0}, {1, 0}, {1, 1}, {0, 1}}, wallkick_offsets = wallkick_offsets.O}, {colour = "TetrisSPiece", name = "S", square_offsets = {{-1, 0}, {0, 0}, {0, 1}, {1, 1}}, wallkick_offsets = wallkick_offsets.normal}, {colour = "TetrisTPiece", name = "T", square_offsets = {{-1, 0}, {0, 0}, {0, 1}, {1, 0}}, wallkick_offsets = wallkick_offsets.normal}, {colour = "TetrisZPiece", name = "Z", square_offsets = {{-1, 1}, {0, 0}, {0, 1}, {1, 0}}, wallkick_offsets = wallkick_offsets.normal}}
+    local v_0_0 = {{colour = "TetrisIPiece", idx = 1, name = "I", square_offsets = {{-1, 0}, {0, 0}, {1, 0}, {2, 0}}, wallkick_offsets = wallkick_offsets.I}, {colour = "TetrisJPiece", idx = 2, name = "J", square_offsets = {{-1, 1}, {-1, 0}, {0, 0}, {1, 0}}, wallkick_offsets = wallkick_offsets.normal}, {colour = "TetrisLPiece", idx = 3, name = "L", square_offsets = {{-1, 0}, {0, 0}, {1, 0}, {1, 1}}, wallkick_offsets = wallkick_offsets.normal}, {colour = "TetrisOPiece", idx = 4, name = "O", square_offsets = {{0, 0}, {1, 0}, {1, 1}, {0, 1}}, wallkick_offsets = wallkick_offsets.O}, {colour = "TetrisSPiece", idx = 5, name = "S", square_offsets = {{-1, 0}, {0, 0}, {0, 1}, {1, 1}}, wallkick_offsets = wallkick_offsets.normal}, {colour = "TetrisTPiece", idx = 6, name = "T", square_offsets = {{-1, 0}, {0, 0}, {0, 1}, {1, 0}}, wallkick_offsets = wallkick_offsets.normal}, {colour = "TetrisZPiece", idx = 7, name = "Z", square_offsets = {{-1, 1}, {0, 0}, {0, 1}, {1, 0}}, wallkick_offsets = wallkick_offsets.normal}}
     _0_0["piece_types"] = v_0_0
     v_0_ = v_0_0
   end

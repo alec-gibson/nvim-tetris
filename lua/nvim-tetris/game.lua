@@ -65,8 +65,10 @@ local falling_delay_frames = nil
 local locking_delay_frames = nil
 local level = nil
 local lines_cleared = nil
+local upcoming_pieces = nil
 local next_piece = nil
-local saved_piece = nil
+local held_piece = nil
+local can_hold_3f = true
 local remove_row = nil
 do
   local v_0_ = nil
@@ -163,6 +165,65 @@ do
   t_0_["close_timer"] = v_0_
   close_timer = v_0_
 end
+local generate_upcoming_pieces = nil
+do
+  local v_0_ = nil
+  local function generate_upcoming_pieces0()
+    upcoming_pieces = {}
+    local num_piece_types = a.count(const.piece_types)
+    for i = 1, num_piece_types do
+      for j = 1, const.repeats_per_block do
+        table.insert(upcoming_pieces, i)
+      end
+    end
+    for i = (num_piece_types * const.repeats_per_block), 2, -1 do
+      local j = math.ceil(math.random((i - 1)))
+      local i_val = upcoming_pieces[i]
+      local j_val = upcoming_pieces[j]
+      upcoming_pieces[i] = j_val
+      upcoming_pieces[j] = i_val
+    end
+    return nil
+  end
+  v_0_ = generate_upcoming_pieces0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["generate_upcoming_pieces"] = v_0_
+  generate_upcoming_pieces = v_0_
+end
+local get_next_piece = nil
+do
+  local v_0_ = nil
+  local function get_next_piece0()
+    next_piece = const.piece_types[table.remove(upcoming_pieces)]
+    if (0 == a.count(upcoming_pieces)) then
+      return generate_upcoming_pieces()
+    end
+  end
+  v_0_ = get_next_piece0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["get_next_piece"] = v_0_
+  get_next_piece = v_0_
+end
+local draw_next_and_held = nil
+do
+  local v_0_ = nil
+  local function draw_next_and_held0()
+    do
+      local next_squares = util.get_piece_squares(const.next_pivot, next_piece, const.next_rotation)
+      tetris_io.clear_next_ns()
+      tetris_io.draw_next_squares(next_squares)
+    end
+    if not a["nil?"](held_piece) then
+      local held_squares = util.get_piece_squares(const.held_pivot, held_piece, const.held_rotation)
+      tetris_io.clear_held_ns()
+      return tetris_io.draw_held_squares(held_squares)
+    end
+  end
+  v_0_ = draw_next_and_held0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["draw_next_and_held"] = v_0_
+  draw_next_and_held = v_0_
+end
 local stop_game = nil
 do
   local v_0_ = nil
@@ -198,9 +259,11 @@ do
   local v_0_ = nil
   local function init_appearing0()
     remaining_appearing_frames = const.entry_delay
-    piece = util.get_random_piece()
+    piece = next_piece
     piece_pivot = {5, 20}
     piece_rotation = 0
+    get_next_piece()
+    draw_next_and_held()
     if util["piece_collides_or_out_of_bounds?"](util.get_piece_squares(piece_pivot, piece, piece_rotation), occupied_squares) then
       do_game_over()
     end
@@ -288,35 +351,103 @@ do
   t_0_["move_right"] = v_0_
   move_right = v_0_
 end
-local rotate = nil
+local apply_rotation = nil
+do
+  local v_0_ = nil
+  local function apply_rotation0(new_rotation)
+    local rotation_offset = util.get_rotation_offset(piece_pivot, piece, piece_rotation, new_rotation, occupied_squares)
+    if not a["nil?"](rotation_offset) then
+      local _let_0_ = rotation_offset
+      local d_x = _let_0_[1]
+      local d_y = _let_0_[2]
+      local _let_1_ = piece_pivot
+      local x = _let_1_[1]
+      local y = _let_1_[2]
+      local new_pivot = {(x + d_x), (y + d_y)}
+      piece_pivot = new_pivot
+      piece_rotation = new_rotation
+      if (game_state == states.locking) then
+        return init_falling()
+      end
+    end
+  end
+  v_0_ = apply_rotation0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["apply_rotation"] = v_0_
+  apply_rotation = v_0_
+end
+local rotate_right = nil
 do
   local v_0_ = nil
   do
     local v_0_0 = nil
-    local function rotate0()
-      local rotation_offset = util.get_rotation_offset(piece_pivot, piece, piece_rotation, a.inc(piece_rotation), occupied_squares)
-      if not a["nil?"](rotation_offset) then
-        local _let_0_ = rotation_offset
-        local d_x = _let_0_[1]
-        local d_y = _let_0_[2]
-        local _let_1_ = piece_pivot
-        local x = _let_1_[1]
-        local y = _let_1_[2]
-        local new_pivot = {(x + d_x), (y + d_y)}
-        piece_pivot = new_pivot
-        piece_rotation = a.inc(piece_rotation)
-        if (game_state == states.locking) then
-          return init_falling()
-        end
-      end
+    local function rotate_right0()
+      return apply_rotation(a.inc(piece_rotation))
     end
-    v_0_0 = rotate0
-    _0_0["rotate"] = v_0_0
+    v_0_0 = rotate_right0
+    _0_0["rotate_right"] = v_0_0
     v_0_ = v_0_0
   end
   local t_0_ = (_0_0)["aniseed/locals"]
-  t_0_["rotate"] = v_0_
-  rotate = v_0_
+  t_0_["rotate_right"] = v_0_
+  rotate_right = v_0_
+end
+local rotate_left = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = nil
+    local function rotate_left0()
+      return apply_rotation(a.dec(piece_rotation))
+    end
+    v_0_0 = rotate_left0
+    _0_0["rotate_left"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["rotate_left"] = v_0_
+  rotate_left = v_0_
+end
+local hold_piece = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = nil
+    local function hold_piece0()
+      if can_hold_3f then
+        if not a["nil?"](held_piece) then
+          table.insert(upcoming_pieces, next_piece.idx)
+          next_piece = held_piece
+        end
+        held_piece = piece
+        can_hold_3f = false
+        return init_appearing()
+      end
+    end
+    v_0_0 = hold_piece0
+    _0_0["hold_piece"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["hold_piece"] = v_0_
+  hold_piece = v_0_
+end
+local pause_game = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = nil
+    local function pause_game0()
+      -- TODO
+      return nil
+    end
+    v_0_0 = pause_game0
+    _0_0["pause_game"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["pause_game"] = v_0_
+  pause_game = v_0_
 end
 local soft_drop = nil
 do
@@ -415,6 +546,7 @@ do
       return nil
     else
       lock_piece()
+      can_hold_3f = true
       return init_appearing()
     end
   end
@@ -561,8 +693,9 @@ do
     locking_delay_frames = 0
     level = 0
     lines_cleared = 0
+    upcoming_pieces = {}
     next_piece = 1
-    saved_piece = 1
+    held_piece = nil
     return nil
   end
   v_0_ = init_globals0
@@ -577,6 +710,8 @@ do
     init_globals()
     init_occupied_squares()
     math.randomseed(os.time())
+    generate_upcoming_pieces()
+    get_next_piece()
     init_timer()
     return start_timer()
   end

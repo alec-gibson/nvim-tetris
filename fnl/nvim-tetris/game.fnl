@@ -29,8 +29,10 @@
 (var lines_cleared nil)
 
 ;; FOR SAVING PIECES
+(var upcoming_pieces nil)
 (var next_piece nil) ; TODO
-(var saved_piece nil) ; TODO
+(var held_piece nil) ; TODO
+(var can_hold? true)
 
 ; --------- HELPER FUNCS -----------
 
@@ -72,6 +74,37 @@
 (defn- close_timer []
   (timer:close))
 
+; insert repeats_per_block copies of each piece to upcoming_pieces
+; then shuffle upcoming_pieces using fisher-yates
+(defn- generate_upcoming_pieces []
+  (set upcoming_pieces [])
+  (let [num_piece_types (a.count const.piece_types)]
+    ; generate pieces
+    (for [i 1 num_piece_types]
+      (for [j 1 const.repeats_per_block]
+        (table.insert upcoming_pieces i)))
+    ; shuffle
+    (for [i (* num_piece_types const.repeats_per_block) 2 -1]
+      (let [j (math.ceil (math.random (- i 1)))]
+        (let [i_val (. upcoming_pieces i)
+              j_val (. upcoming_pieces j)]
+          (tset upcoming_pieces i j_val)
+          (tset upcoming_pieces j i_val))))))
+
+(defn- get_next_piece []
+  (set next_piece (. const.piece_types (table.remove upcoming_pieces)))
+  (if (= 0 (a.count upcoming_pieces))
+    (generate_upcoming_pieces)))
+
+(defn- draw_next_and_held []
+  (let [next_squares (util.get_piece_squares const.next_pivot next_piece const.next_rotation)]
+    (tetris_io.clear_next_ns)
+    (tetris_io.draw_next_squares next_squares))
+  (when (not (a.nil? held_piece))
+    (let [held_squares (util.get_piece_squares const.held_pivot held_piece const.held_rotation)]
+      (tetris_io.clear_held_ns)
+      (tetris_io.draw_held_squares held_squares))))
+
 ; ---------- INIT STATES -----------
 
 (defn stop_game []
@@ -84,15 +117,14 @@
 
 (defn- init_appearing []
   (set remaining_appearing_frames const.entry_delay)
-  (set piece (util.get_random_piece))
+  (set piece next_piece)
   (set piece_pivot [5 20])
   (set piece_rotation 0)
+  (get_next_piece)
+  (draw_next_and_held)
   (when (util.piece_collides_or_out_of_bounds? (util.get_piece_squares piece_pivot piece piece_rotation) occupied_squares)
     (do_game_over))
   (set game_state states.appearing))
-
-; (util.piece_collides_or_out_of_bounds? (util.get_piece_squares [5 20] (. const.piece_types 1) 0) occupied_squares)
-; (v.serialise occupied_squares)
 
 (defn- init_falling []
   (reset_falling_delay)
@@ -120,16 +152,34 @@
       (when (= game_state states.locking)
           (init_falling)))))
 
-(defn rotate []
-  (let [rotation_offset (util.get_rotation_offset piece_pivot piece piece_rotation (a.inc piece_rotation) occupied_squares)]
+(defn- apply_rotation [new_rotation]
+  (let [rotation_offset (util.get_rotation_offset piece_pivot piece piece_rotation new_rotation occupied_squares)]
     (when (not (a.nil? rotation_offset))
       (let [[d_x d_y] rotation_offset
             [x y] piece_pivot
             new_pivot [(+ x d_x) (+ y d_y)]]
         (set piece_pivot new_pivot)
-        (set piece_rotation (a.inc piece_rotation))
+        (set piece_rotation new_rotation)
         (when (= game_state states.locking)
           (init_falling))))))
+
+(defn rotate_right []
+  (apply_rotation (a.inc piece_rotation)))
+
+(defn rotate_left []
+  (apply_rotation (a.dec piece_rotation)))
+
+(defn hold_piece []
+  (when can_hold?
+    (when (not (a.nil? held_piece))
+      (table.insert upcoming_pieces next_piece.idx)
+      (set next_piece held_piece))
+    (set held_piece piece)
+    (set can_hold? false)
+    (init_appearing)))
+
+(defn pause_game []
+  (comment "TODO"))
 
 (defn soft_drop []
   (let [[col row] piece_pivot
@@ -170,6 +220,7 @@
     (set locking_delay_frames (a.dec locking_delay_frames))
     (do
       (lock_piece)
+      (set can_hold? true)
       (init_appearing))))
 
 ; logic for a single frame when game is in the "intro" state
@@ -242,13 +293,16 @@
   (set locking_delay_frames 0)
   (set level 0)
   (set lines_cleared 0)
+  (set upcoming_pieces [])
   (set next_piece 1)
-  (set saved_piece 1))
+  (set held_piece nil))
 
 (defn- init_game []
   (init_globals)
   (init_occupied_squares)
   (math.randomseed (os.time))
+  (generate_upcoming_pieces)
+  (get_next_piece)
   (init_timer)
   (start_timer))
 
@@ -259,7 +313,3 @@
   (tetris_io.set_game_maps)
   (tetris_io.prepare_game_cleanup)
   (init_game))
-
-; (start)
-; (close_timer)
-; (stop_timer)

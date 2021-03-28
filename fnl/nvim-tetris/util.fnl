@@ -46,6 +46,7 @@
   (or (< row 1)
     (. (. occupied_squares row) col)))
 
+; returns the game-space squares taken up by the piece, pivot location and rotation
 ; [x y] {:square_offsets [[x y]] :colour ""} int -> [{:coords [x y] :colour ""}]
 (defn get_piece_squares [pivot piece rotation]
   (icollect [_ offset (ipairs (apply_rotation piece rotation))]

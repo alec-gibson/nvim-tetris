@@ -65,11 +65,27 @@ do
   t_0_["locked_ns_name"] = v_0_
   locked_ns_name = v_0_
 end
+local next_ns_name = nil
+do
+  local v_0_ = "next_ns"
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["next_ns_name"] = v_0_
+  next_ns_name = v_0_
+end
+local held_ns_name = nil
+do
+  local v_0_ = "held_ns"
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["held_ns_name"] = v_0_
+  held_ns_name = v_0_
+end
 local buf = nil
 local win = nil
 local piece_ns = nil
 local shadow_ns = nil
 local locked_ns = nil
+local next_ns = nil
+local held_ns = nil
 local square_width = nil
 do
   local v_0_ = 2
@@ -112,6 +128,62 @@ do
   t_0_["win_char_height"] = v_0_
   win_char_height = v_0_
 end
+local sidebar_char_width = nil
+do
+  local v_0_ = (const.sidebar_width * square_width)
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["sidebar_char_width"] = v_0_
+  sidebar_char_width = v_0_
+end
+local sidebar_byte_width = nil
+do
+  local v_0_ = (sidebar_char_width * square_bytes_per_char)
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["sidebar_byte_width"] = v_0_
+  sidebar_byte_width = v_0_
+end
+local board_char_width = nil
+do
+  local v_0_ = (const.columns * square_width)
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["board_char_width"] = v_0_
+  board_char_width = v_0_
+end
+local board_byte_width = nil
+do
+  local v_0_ = (board_char_width * square_bytes_per_char)
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["board_byte_width"] = v_0_
+  board_byte_width = v_0_
+end
+local init_row = nil
+do
+  local v_0_ = nil
+  local function init_row0(row)
+    api.nvim_buf_set_lines(buf, row, row, false, {string.rep("\226\150\136\226\150\136", const.screen_cols)})
+    api.nvim_buf_add_highlight(buf, -1, "TetrisSidebar", row, 0, sidebar_byte_width)
+    api.nvim_buf_add_highlight(buf, -1, "TetrisBackground", row, sidebar_byte_width, (sidebar_byte_width + board_byte_width))
+    return api.nvim_buf_add_highlight(buf, -1, "TetrisSidebar", row, (sidebar_byte_width + board_byte_width), -1)
+  end
+  v_0_ = init_row0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["init_row"] = v_0_
+  init_row = v_0_
+end
+local init_highlights = nil
+do
+  local v_0_ = nil
+  local function init_highlights0()
+    for group, colours in pairs(const.colours) do
+      api.nvim_command(("hi " .. group .. " guifg=" .. colours.guifg .. " ctermfg=" .. colours.ctermfg))
+    end
+    return nil
+  end
+  v_0_ = init_highlights0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["init_highlights"] = v_0_
+  init_highlights = v_0_
+end
 local remove_row = nil
 do
   local v_0_ = nil
@@ -119,10 +191,8 @@ do
     local v_0_0 = nil
     local function remove_row0(row)
       local buf_row = a.inc((const.screen_rows - row))
-      local top_row = 1
       api.nvim_buf_set_lines(buf, buf_row, a.inc(buf_row), false, {})
-      api.nvim_buf_set_lines(buf, top_row, top_row, false, {string.rep("\226\150\136\226\150\136", const.screen_cols)})
-      return api.nvim_buf_add_highlight(buf, -1, "TetrisBackground", top_row, 0, -1)
+      return init_row(1)
     end
     v_0_0 = remove_row0
     _0_0["remove_row"] = v_0_0
@@ -138,14 +208,13 @@ do
   do
     local v_0_0 = nil
     local function draw_squares0(squares, ns)
-      local filtered_squares = util.squares_in_bounds(squares)
-      for i, square in ipairs(filtered_squares) do
+      for i, square in ipairs(squares) do
         local _let_0_ = square
         local colour = _let_0_["colour"]
         local _let_1_ = _let_0_["coords"]
         local col = _let_1_[1]
         local row = _let_1_[2]
-        local x = a.dec(col)
+        local x = (const.sidebar_width + a.dec(col))
         local y = ((const.screen_rows - row) + header_height)
         local start_col = (x * 2)
         local start_hl = (start_col * 3)
@@ -168,7 +237,7 @@ do
   do
     local v_0_0 = nil
     local function draw_piece_squares0(squares)
-      return draw_squares(squares, piece_ns)
+      return draw_squares(util.squares_in_bounds(squares), piece_ns)
     end
     v_0_0 = draw_piece_squares0
     _0_0["draw_piece_squares"] = v_0_0
@@ -184,7 +253,7 @@ do
   do
     local v_0_0 = nil
     local function draw_shadow_squares0(squares)
-      return draw_squares(squares, shadow_ns)
+      return draw_squares(util.squares_in_bounds(squares), shadow_ns)
     end
     v_0_0 = draw_shadow_squares0
     _0_0["draw_shadow_squares"] = v_0_0
@@ -200,7 +269,7 @@ do
   do
     local v_0_0 = nil
     local function draw_locked_squares0(squares)
-      return draw_squares(squares, locked_ns)
+      return draw_squares(util.squares_in_bounds(squares), locked_ns)
     end
     v_0_0 = draw_locked_squares0
     _0_0["draw_locked_squares"] = v_0_0
@@ -209,6 +278,38 @@ do
   local t_0_ = (_0_0)["aniseed/locals"]
   t_0_["draw_locked_squares"] = v_0_
   draw_locked_squares = v_0_
+end
+local draw_next_squares = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = nil
+    local function draw_next_squares0(squares)
+      return draw_squares(squares, next_ns)
+    end
+    v_0_0 = draw_next_squares0
+    _0_0["draw_next_squares"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["draw_next_squares"] = v_0_
+  draw_next_squares = v_0_
+end
+local draw_held_squares = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = nil
+    local function draw_held_squares0(squares)
+      return draw_squares(squares, held_ns)
+    end
+    v_0_0 = draw_held_squares0
+    _0_0["draw_held_squares"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["draw_held_squares"] = v_0_
+  draw_held_squares = v_0_
 end
 local clear_ns = nil
 do
@@ -274,32 +375,84 @@ do
   t_0_["clear_locked_ns"] = v_0_
   clear_locked_ns = v_0_
 end
+local clear_next_ns = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = nil
+    local function clear_next_ns0()
+      return clear_ns(next_ns)
+    end
+    v_0_0 = clear_next_ns0
+    _0_0["clear_next_ns"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["clear_next_ns"] = v_0_
+  clear_next_ns = v_0_
+end
+local clear_held_ns = nil
+do
+  local v_0_ = nil
+  do
+    local v_0_0 = nil
+    local function clear_held_ns0()
+      return clear_ns(held_ns)
+    end
+    v_0_0 = clear_held_ns0
+    _0_0["clear_held_ns"] = v_0_0
+    v_0_ = v_0_0
+  end
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["clear_held_ns"] = v_0_
+  clear_held_ns = v_0_
+end
 local center = nil
 do
   local v_0_ = nil
   local function center0(str)
     local width = api.nvim_win_get_width(0)
-    local shift = (math.floor((width / 2)) - math.floor((string.len(str) / 2)))
-    return (string.rep(" ", shift) .. str)
+    local before = (math.floor((width / 2)) - math.floor((string.len(str) / 2)))
+    local after = (width - (before + string.len(str)))
+    return (string.rep(" ", before) .. str .. string.rep(" ", after))
   end
   v_0_ = center0
   local t_0_ = (_0_0)["aniseed/locals"]
   t_0_["center"] = v_0_
   center = v_0_
 end
-local init_highlights = nil
+local str_start = nil
 do
   local v_0_ = nil
-  local function init_highlights0()
-    for group, colour in pairs(const.colours) do
-      api.nvim_command(("hi " .. group .. " guifg=" .. colour))
-    end
-    return nil
+  local function str_start0(str, body)
+    return (str .. string.sub(body, a.inc(string.len(str))))
   end
-  v_0_ = init_highlights0
+  v_0_ = str_start0
   local t_0_ = (_0_0)["aniseed/locals"]
-  t_0_["init_highlights"] = v_0_
-  init_highlights = v_0_
+  t_0_["str_start"] = v_0_
+  str_start = v_0_
+end
+local str_end = nil
+do
+  local v_0_ = nil
+  local function str_end0(str, body)
+    return (string.sub(body, 1, (string.len(body) - string.len(str))) .. str)
+  end
+  v_0_ = str_end0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["str_end"] = v_0_
+  str_end = v_0_
+end
+local create_header = nil
+do
+  local v_0_ = nil
+  local function create_header0()
+    return str_start("    Held", str_end("Next    ", center("Tetris")))
+  end
+  v_0_ = create_header0
+  local t_0_ = (_0_0)["aniseed/locals"]
+  t_0_["create_header"] = v_0_
+  create_header = v_0_
 end
 local init_window = nil
 do
@@ -319,16 +472,17 @@ do
         local border_opts = {col = a.dec(col), height = win_char_height, relative = "editor", row = a.dec(row), style = "minimal", width = win_char_width}
         local opts = {col = col, height = win_char_height, relative = "editor", row = row, style = "minimal", width = win_char_width}
         win = api.nvim_open_win(buf, true, opts)
-        api.nvim_buf_set_lines(buf, 0, -1, false, {center("Tetris")})
+        api.nvim_buf_set_lines(buf, 0, -1, false, {create_header()})
         for i = 1, const.screen_rows do
-          api.nvim_buf_set_lines(buf, i, i, false, {string.rep("\226\150\136\226\150\136", const.screen_cols)})
-          api.nvim_buf_add_highlight(buf, -1, "TetrisBackground", i, 0, -1)
+          init_row(i)
         end
         api.nvim_buf_add_highlight(buf, -1, "TetrisHeader", 0, 0, -1)
       end
       piece_ns = api.nvim_create_namespace(piece_ns_name)
       shadow_ns = api.nvim_create_namespace(shadow_ns_name)
       locked_ns = api.nvim_create_namespace(locked_ns_name)
+      next_ns = api.nvim_create_namespace(next_ns_name)
+      held_ns = api.nvim_create_namespace(held_ns_name)
       return init_highlights()
     end
     v_0_0 = init_window0
@@ -345,11 +499,11 @@ do
   do
     local v_0_0 = nil
     local function set_game_maps0()
-      local mappings = {["<Down>"] = "soft_drop()", ["<Left>"] = "move_left()", ["<Right>"] = "move_right()", ["<Space>"] = "hard_drop()", ["<Up>"] = "rotate()"}
+      local mappings = {["<Down>"] = "soft_drop()", ["<Left>"] = "move_left()", ["<Right>"] = "move_right()", ["<Space>"] = "hard_drop()", ["<Up>"] = "rotate_right()", c = "hold_piece()", p = "pause_game()", z = "rotate_left()"}
       for k, v0 in pairs(mappings) do
         api.nvim_buf_set_keymap(buf, "n", k, (":lua require\"nvim-tetris.game\"." .. v0 .. "<cr>"), {noremap = true, nowait = true, silent = true})
       end
-      local other_chars = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"}
+      local other_chars = {"a", "b", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "q", "r", "s", "t", "u", "v", "w", "x", "y"}
       for k, v0 in ipairs(other_chars) do
         api.nvim_buf_set_keymap(buf, "n", v0, "", {noremap = true, nowait = true, silent = true})
         api.nvim_buf_set_keymap(buf, "n", string.upper(v0), "", {noremap = true, nowait = true, silent = true})

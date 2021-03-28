@@ -2,13 +2,20 @@
 
 (def rows 24) ; only 20 drawn inside the game border
 (def columns 10)
-(def screen_rows 20)
-(def screen_cols 10)
 (def max_level 18) ; after level 18, all levels are same speed
 (def frame_delay (math.floor (/ 1000 60)))
 (def lock_delay 10) ; in frames. My game will support move reset - successfully moving or rotating resets the lock delay
 (def entry_delay 10) ; in frames. Time between previous piece locking and new piece starting to fall
 (def lines_per_level 10)
+(def repeats_per_block 4) ; number of same piece in each block of upcoming pieces
+(def sidebar_width 6) ; width of the "next piece" and "held piece" sections
+(def screen_rows 20)
+(def screen_cols (+ columns (* 2 sidebar_width)))
+
+(def next_pivot [(+ columns 3) 18])
+(def next_rotation 0)
+(def held_pivot [-3 18])
+(def held_rotation 0)
 
 (def game_states {"appearing" 0
                   "falling" 1
@@ -17,16 +24,17 @@
                   "paused" 4
                   "gameover" 5})
 
-(def colours {:TetrisBackground "Black"
-              :TetrisHeader "DarkGray"
-              :TetrisIPiece "Cyan"
-              :TetrisJPiece "Blue"
-              :TetrisLPiece "Orange"
-              :TetrisOPiece "Yellow"
-              :TetrisSPiece "Green"
-              :TetrisTPiece "Purple"
-              :TetrisZPiece "Red"
-              :TetrisShadow "LightGray"})
+(def colours {:TetrisBackground {:guifg "Black" :ctermfg "Black"}
+              :TetrisSidebar {:guifg "#222222" :ctermfg "DarkGray"}
+              :TetrisHeader {:guifg "LightGray" :ctermfg "LightGray"}
+              :TetrisIPiece {:guifg "Cyan" :ctermfg "DarkCyan"}
+              :TetrisJPiece {:guifg "Blue" :ctermfg "DarkBlue"}
+              :TetrisLPiece {:guifg "Orange" :ctermfg "Brown"}
+              :TetrisOPiece {:guifg "Yellow" :ctermfg "Yellow"}
+              :TetrisSPiece {:guifg "Green" :ctermfg "DarkGreen"}
+              :TetrisTPiece {:guifg "Purple" :ctermfg "DarkMagenta"}
+              :TetrisZPiece {:guifg "Red" :ctermfg "DarkRed"}
+              :TetrisShadow {:guifg "LightGray" :ctermfg "LightGray"}})
 
 ; following "How Guideline SRS Really Works" from https://harddrop.com/wiki/SRS
 ; How wallkicking works: say we're changing an I piece from rotation state 0 to 1
@@ -51,30 +59,37 @@
 ; following "How Guideline SRS Really Works" from https://harddrop.com/wiki/SRS
 ; piece pivot always starts off at [5 21]
 (def piece_types [{:name "I"
+                   :idx 1
                    :colour "TetrisIPiece"
                    :square_offsets [[-1 0] [0 0] [1 0] [2 0]]
                    :wallkick_offsets wallkick_offsets.I}
                   {:name "J"
+                   :idx 2
                    :colour "TetrisJPiece"
                    :square_offsets [[-1 1] [-1 0] [0 0] [1 0]]
                    :wallkick_offsets wallkick_offsets.normal}
                   {:name "L"
+                   :idx 3
                    :colour "TetrisLPiece"
                    :square_offsets [[-1 0] [0 0] [1 0] [1 1]]
                    :wallkick_offsets wallkick_offsets.normal}
                   {:name "O"
+                   :idx 4
                    :colour "TetrisOPiece"
                    :square_offsets [[0 0] [1 0] [1 1] [0 1]]
                    :wallkick_offsets wallkick_offsets.O}
                   {:name "S"
+                   :idx 5
                    :colour "TetrisSPiece"
                    :square_offsets [[-1 0] [0 0] [0 1] [1 1]]
                    :wallkick_offsets wallkick_offsets.normal}
                   {:name "T"
+                   :idx 6
                    :colour "TetrisTPiece"
                    :square_offsets [[-1 0] [0 0] [0 1] [1 0]]
                    :wallkick_offsets wallkick_offsets.normal}
                   {:name "Z"
+                   :idx 7
                    :colour "TetrisZPiece"
                    :square_offsets [[-1 1] [0 0] [0 1] [1 0]]
                    :wallkick_offsets wallkick_offsets.normal}])
