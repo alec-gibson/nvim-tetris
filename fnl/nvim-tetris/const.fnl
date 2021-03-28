@@ -4,7 +4,7 @@
 (def columns 10)
 (def max_level 18) ; after level 18, all levels are same speed
 (def frame_delay (math.floor (/ 1000 60)))
-(def lock_delay 10) ; in frames. My game will support move reset - successfully moving or rotating resets the lock delay
+(def lock_delay 20) ; in frames. My game will support move reset - successfully moving or rotating resets the lock delay
 (def entry_delay 10) ; in frames. Time between previous piece locking and new piece starting to fall
 (def lines_per_level 10)
 (def repeats_per_block 4) ; number of same piece in each block of upcoming pieces

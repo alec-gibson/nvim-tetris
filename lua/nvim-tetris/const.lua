@@ -85,7 +85,7 @@ local lock_delay = nil
 do
   local v_0_ = nil
   do
-    local v_0_0 = 10
+    local v_0_0 = 20
     _0_0["lock_delay"] = v_0_0
     v_0_ = v_0_0
   end
