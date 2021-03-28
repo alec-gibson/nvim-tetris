@@ -17,7 +17,9 @@ nvim-tetris is a work-in-progress, and is not feature complete.
 ## Controls
 - Left Arrow: move left
 - Right Arrow: move right
-- Up Arrow: rotate piece
+- Up Arrow: rotate piece clockwise
+- z: rotate piece counter-clockwise
+- c: hold piece
 - Down Arrow: soft drop
 - Space Bar: hard drop
 
@@ -29,11 +31,10 @@ nvim-tetris is a work-in-progress, and is not feature complete.
 - Correct rotation behaviour including wall-kicks according to "How Guideline SRS Really Works" from https://harddrop.com/wiki/SRS (this means T-spins work)
 
 ## Next Steps
-- Add border showing current level, current score, next piece, saved piece (and add logic for saving pieces)
+- Add border showing current level, current score, and add logic for score
 - Add pause screen (with options to resume game, start new game or quit)
 - Add game over screen (with options to play again or quit)
 - Add intro screen which shows controls
-- Add logic for score
 - Configuration (colourscheme, keybindings, starting level, integer scaling)
 - Documentation
 - Tests
