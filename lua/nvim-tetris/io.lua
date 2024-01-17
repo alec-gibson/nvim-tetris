@@ -349,7 +349,7 @@ do
       for k, v0 in pairs(mappings) do
         api.nvim_buf_set_keymap(buf, "n", k, (":lua require\"nvim-tetris.game\"." .. v0 .. "<cr>"), {noremap = true, nowait = true, silent = true})
       end
-      local other_chars = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"}
+      local other_chars = {"a", "b", "c", "d", "e", "f", "g", "i", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"}
       for k, v0 in ipairs(other_chars) do
         api.nvim_buf_set_keymap(buf, "n", v0, "", {noremap = true, nowait = true, silent = true})
         api.nvim_buf_set_keymap(buf, "n", string.upper(v0), "", {noremap = true, nowait = true, silent = true})
