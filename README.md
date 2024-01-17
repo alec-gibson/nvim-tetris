@@ -1,4 +1,7 @@
 # nvim-tetris
+
+This fork adds option to play with hjkl instead of arrow keys.
+
 Bringing emacs' greatest feature to neovim - Tetris!
 
 ![Gameplay Screenshot](./gameplay.png "Some poorly executed demo gameplay")
