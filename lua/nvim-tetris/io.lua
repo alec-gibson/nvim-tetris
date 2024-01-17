@@ -345,7 +345,7 @@ do
   do
     local v_0_0 = nil
     local function set_game_maps0()
-      local mappings = {["<Down>"] = "soft_drop()", ["<Left>"] = "move_left()", ["<Right>"] = "move_right()", ["<Space>"] = "hard_drop()", ["<Up>"] = "rotate()"}
+      local mappings = {["<Down>"] = "soft_drop()", ["j"] = "soft_drop()", ["<Left>"] = "move_left()", ["h"] = "move_left()", ["<Right>"] = "move_right()", ["l"] = "move_right()", ["<Space>"] = "hard_drop()", ["<Up>"] = "rotate()", ["k"] = "rotate()"}
       for k, v0 in pairs(mappings) do
         api.nvim_buf_set_keymap(buf, "n", k, (":lua require\"nvim-tetris.game\"." .. v0 .. "<cr>"), {noremap = true, nowait = true, silent = true})
       end
